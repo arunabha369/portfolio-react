@@ -9,7 +9,7 @@ import rehypeShiki from '@shikijs/rehype'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/portfolio-react/',
+
   plugins: [
     {
         enforce: 'pre',
