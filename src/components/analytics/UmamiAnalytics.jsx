@@ -1,7 +1,7 @@
 import Script from '@/components/ui/Script';
 export default function UmamiAnalytics() {
-  const umamiSrc = process.env.NEXT_PUBLIC_UMAMI_SRC;
-  const umamiId = process.env.NEXT_PUBLIC_UMAMI_ID;
+  const umamiSrc = import.meta.env.VITE_UMAMI_SRC;
+  const umamiId = import.meta.env.VITE_UMAMI_ID;
   if (!umamiSrc || !umamiId) {
     console.error('Umami Analytics is not configured.');
     return null;
