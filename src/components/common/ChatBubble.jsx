@@ -14,7 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import SendIcon from '../svgs/SendIcon';
 const initialMessages = [{
   id: 1,
-  text: "Hello! I'm Ram's Portfolio Assistant. How can I help you?",
+  text: "Hello! I'm Arunabha's Portfolio Assistant. How can I help you?",
   sender: 'bot',
   timestamp: new Date().toLocaleTimeString([], {
     hour: '2-digit',
@@ -224,7 +224,7 @@ const ChatBubble = () => {
     <ExpandableChatBody>
       <ScrollArea ref={scrollAreaRef} className="h-full p-4">
         <div className="space-y-4">
-          {messages.map(message => <div key={message.id} className={cn('flex w-max max-w-xs flex-col gap-2 rounded-lg px-3 py-2 text-sm', message.sender === 'user' ? 'text-secondary bg-muted ml-auto' : 'bg-muted')}>
+          {messages.map(message => <div key={message.id} className={cn('flex w-max max-w-xs flex-col gap-2 rounded-lg px-3 py-2 text-sm text-left', message.sender === 'user' ? 'text-secondary bg-muted ml-auto' : 'bg-muted')}>
             <div className="flex items-start space-x-2">
               {message.sender === 'bot' && <Avatar className="border-primary h-6 w-6 border-2 bg-black">
                 <AvatarImage src="/assets/new-logo.png" alt="Assistant" />
@@ -259,7 +259,7 @@ const ChatBubble = () => {
 
           {/* Show suggestions only when conversation just started */}
           {messages.length === 1 && !isLoading && <div className="space-y-2">
-            <p className="text-muted-foreground px-3 text-xs">
+            <p className="text-muted-foreground px-3 text-xs text-left">
               Quick questions:
             </p>
             <div className="flex flex-wrap gap-2 px-3">
