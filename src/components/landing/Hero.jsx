@@ -48,18 +48,18 @@ export default function Hero() {
     <Image src={avatar} alt="hero" width={100} height={100} className="size-24 rounded-full bg-black" />
 
     {/* Text Area */}
-    <div className="mt-8 flex flex-col gap-2 items-start text-left">
-      <h1 className="text-2xl font-bold whitespace-nowrap sm:text-3xl md:text-4xl">
+    <div className="mt-8 flex flex-col gap-2 items-center text-center sm:items-start sm:text-left">
+      <h1 className="text-2xl font-bold whitespace-normal sm:whitespace-nowrap sm:text-3xl md:text-4xl">
         Hi, I&apos;m {name} — <span className="text-secondary">{title}</span>
       </h1>
 
-      <div className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-base whitespace-pre-wrap text-neutral-500 md:text-lg text-left">
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-base whitespace-pre-wrap text-neutral-500 md:text-lg text-center sm:text-left sm:justify-start">
         {renderDescription()}
       </div>
     </div>
 
     {/* Buttons */}
-    <div className="mt-8 flex gap-4">
+    <div className="mt-8 flex gap-4 justify-center sm:justify-start">
       {buttons.map((button, index) => {
         const IconComponent = buttonIcons[button.icon];
         return <Button key={index} variant={button.variant} className={cn(button.variant === 'outline' && 'inset-shadow-indigo-500', button.variant === 'default' && 'inset-shadow-indigo-500')}>
@@ -70,7 +70,7 @@ export default function Hero() {
     </div>
 
     {/* Social Links */}
-    <div className="mt-8 flex gap-2">
+    <div className="mt-8 flex gap-2 justify-center sm:justify-start">
       {socialLinks.map(link => <Tooltip key={link.name} delayDuration={0}>
         <TooltipTrigger asChild>
           <Link href={link.href} key={link.name} className="text-secondary flex items-center gap-2" target="_blank" rel="noopener noreferrer">

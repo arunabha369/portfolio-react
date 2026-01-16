@@ -6,7 +6,7 @@ import Github from '@/components/landing/Github';
 import Hero from '@/components/landing/Hero';
 import Journey from '@/components/landing/Journey';
 import Work from '@/components/landing/Projects';
-import Setup from '@/components/landing/Setup';
+
 import React from 'react';
 export default function page() {
   return <Container className="min-h-screen py-16">
@@ -16,7 +16,6 @@ export default function page() {
     <Github />
     <Blog />
     <CTA />
-    <Setup />
     <Journey />
   </Container>;
 }
