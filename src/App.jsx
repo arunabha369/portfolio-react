@@ -5,7 +5,7 @@ import ScrollToTop from '@/components/common/ScrollToTop';
 
 import Home from '@/pages/Home';
 import Blog from '@/pages/Blog';
-import BlogPost from '@/pages/BlogPost';
+import BlogDetail from '@/pages/BlogDetail'; // Changed from BlogPost to BlogDetail to match new file
 import Projects from '@/pages/Projects';
 import ProjectDetail from '@/pages/ProjectDetail';
 import Contact from '@/pages/Contact';
@@ -19,6 +19,11 @@ import Books from '@/pages/Books';
 import Movies from '@/pages/Movies';
 import Youtubers from '@/pages/Youtubers';
 
+// Admin Imports
+import AdminRoute from '@/components/admin/AdminRoute';
+import AdminDashboard from '@/components/admin/AdminDashboard';
+import BlogEditor from '@/components/admin/BlogEditor';
+
 import './App.css';
 
 function App() {
@@ -28,8 +33,28 @@ function App() {
             <RootLayout>
                 <Routes>
                     <Route path="/" element={<Home />} />
+
+                    {/* Public Blog Routes */}
                     <Route path="/blog" element={<Blog />} />
-                    <Route path="/blog/:slug" element={<BlogPost />} />
+                    <Route path="/blog/:slug" element={<BlogDetail />} />
+
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={
+                        <AdminRoute>
+                            <AdminDashboard />
+                        </AdminRoute>
+                    } />
+                    <Route path="/admin/create" element={
+                        <AdminRoute>
+                            <BlogEditor />
+                        </AdminRoute>
+                    } />
+                    <Route path="/admin/edit/:id" element={
+                        <AdminRoute>
+                            <BlogEditor />
+                        </AdminRoute>
+                    } />
+
                     <Route path="/projects" element={<Projects />} />
                     <Route path="/projects/:slug" element={<ProjectDetail />} />
                     <Route path="/contact" element={<Contact />} />

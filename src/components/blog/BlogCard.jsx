@@ -1,65 +1,82 @@
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import Link from '@/components/ui/Link';
-import Image from '@/components/ui/Image';
-import ArrowRight from '../svgs/ArrowRight';
-import Calender from '../svgs/Calender';
-export function BlogCard({
-  post
-}) {
-  const {
-    slug,
-    frontmatter
-  } = post;
-  const {
-    title,
-    description,
-    image,
-    tags,
-    date
-  } = frontmatter;
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  return <Card className="group h-full w-full overflow-hidden border-gray-100 p-0 shadow-none transition-all dark:border-gray-800">
-      <CardHeader className="p-0">
-        <div className="relative aspect-video overflow-hidden">
-          <Link href={`/blog/${slug}`}>
-            <Image src={image} alt={title} fill className="object-cover" />
-          </Link>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          <Link href={`/blog/${slug}`}>
-            <h3 className="group-hover:text-primary line-clamp-2 text-xl leading-tight font-semibold">
-              {title}
-            </h3>
-          </Link>
-          <p className="text-secondary mt-4 line-clamp-3">{description}</p>
-        </div>
-      </CardContent>
-      <CardFooter className="p-6 pt-0">
-        <div className="flex w-full flex-col space-y-3">
-          <div className="flex flex-wrap gap-2">
-            {tags.slice(0, 3).map(tag => <Badge key={tag} variant="secondary" className="text-xs">
-                {tag}
-              </Badge>)}
-            {tags.length > 3 && <Badge variant="outline" className="text-xs">
-                +{tags.length - 3} more
-              </Badge>}
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronRight, Pin } from 'lucide-react';
+
+const BlogCard = ({ blog }) => {
+  // Use first tag as category, fallback to "Tech"
+  const category = blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Tech";
+
+  return (
+    <Link
+      to={`/blog/${blog.slug}`}
+      className="group relative flex flex-col bg-card/50 backdrop-blur-sm rounded-[24px] overflow-hidden transition-all duration-500 cursor-pointer border border-zinc-800/40 hover:border-accent/30 shadow-sm hover:shadow-2xl hover:shadow-accent/5 no-underline"
+    >
+      {/* --- Image Section with "Cutting" look --- */}
+      <div className="relative w-full h-64 overflow-hidden">
+        {/* Gradient Overlay for Depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent z-10 opacity-60" />
+
+        {/* Main Image */}
+        {blog.cover_image ? (
+          <img
+            src={blog.cover_image}
+            alt={blog.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          />
+        ) : (
+          <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-zinc-700 font-medium">
+            No Preview
           </div>
-          <div className="mt-4 flex items-center justify-between gap-2">
-            <time className="text-secondary flex items-center gap-2 text-sm" dateTime={date}>
-              <Calender className="size-4" /> {formattedDate}
-            </time>
-            <Link href={`/blog/${slug}`} className="text-secondary flex items-center justify-end gap-2 underline-offset-4 hover:underline">
-              Read More <ArrowRight className="size-4" />
-            </Link>
-          </div>
+        )}
+
+        {/* Glass Date Badge */}
+        <div className="absolute top-4 left-4 z-20 bg-black/40 backdrop-blur-md text-white/90 text-[10px] sm:text-xs font-semibold px-3 py-1.5 rounded-full border border-white/10 shadow-lg">
+          {new Date(blog.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
-      </CardFooter>
-    </Card>;
-}
+
+        {/* Professional Pinned Badge (Mock logic if needed, currently checking a non-existent prop but ready for future) */}
+        {blog.is_pinned && (
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-accent/90 backdrop-blur-md text-black px-3 py-1.5 rounded-full shadow-lg shadow-accent/20 animate-in fade-in zoom-in duration-300">
+            <Pin className="w-3 h-3 fill-current" />
+            <span className="text-[10px] font-bold uppercase tracking-widest">Featured</span>
+          </div>
+        )}
+      </div>
+
+      {/* --- Content Section --- */}
+      <div className="p-6 pt-4 flex flex-col flex-grow relative z-20 -mt-8">
+        {/* Category Pill - Floating slightly over image */}
+        <div className="mb-4">
+          <span className="inline-block bg-black/80 backdrop-blur-md border border-zinc-700/50 text-zinc-300 text-[10px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-lg shadow-sm group-hover:bg-accent group-hover:text-black transition-colors duration-300">
+            {category}
+          </span>
+        </div>
+
+        <h2 className="text-xl font-bold leading-snug text-white mb-3 group-hover:text-accent transition-colors line-clamp-2">
+          {blog.title}
+        </h2>
+
+        <p className="text-zinc-400 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
+          {blog.description}
+        </p>
+
+        {/* Footer */}
+        <div className="mt-auto pt-4 border-t border-dashed border-zinc-800 flex justify-between items-center text-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-accent to-purple-600 flex items-center justify-center text-[10px] text-black font-bold">
+              K
+            </div>
+            <span className="text-zinc-500 text-xs font-medium">Author</span>
+          </div>
+
+          <span className="flex items-center gap-1.5 text-xs font-bold text-accent group-hover:translate-x-1 transition-transform">
+            Read Article
+            <ChevronRight className="w-3.5 h-3.5" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default BlogCard;

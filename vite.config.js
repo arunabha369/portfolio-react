@@ -21,6 +21,9 @@ export default defineConfig({
     react(), 
     tailwindcss()
   ],
+  optimizeDeps: {
+    include: ['react-icons/fa', 'react-icons/fa6', 'react-icons/io5', 'react-icons/bs', 'react-icons/md', 'react-icons/gi', 'react-icons/si']
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
