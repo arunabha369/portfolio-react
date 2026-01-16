@@ -19,7 +19,21 @@ export function getProjectCaseStudyBySlug(slug) {
   }
 
   // Validate frontmatter
-  const frontmatter = module.frontmatter || {};
+  let frontmatter = module.frontmatter || {};
+
+  // Merge with config data
+  const configProject = projects.find(p => p.projectDetailsPageSlug === `/projects/${slug}`);
+  if (configProject) {
+    frontmatter = {
+      ...configProject,
+      ...frontmatter,
+      technologies: frontmatter.technologies || configProject.technologies?.map(t => t.name) || [],
+      // Ensure github link is preserved if missing in MDX but present in config
+      github: frontmatter.github || configProject.github,
+      live: frontmatter.live || configProject.live
+    };
+  }
+
   if (!frontmatter.title || !frontmatter.description) {
     console.warn(`Invalid frontmatter in ${slug}.mdx`);
   }

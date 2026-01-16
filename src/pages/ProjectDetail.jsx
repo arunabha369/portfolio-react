@@ -27,6 +27,8 @@ export default function ProjectCaseStudyPage() {
   const navigation = getProjectNavigation(slug);
   const relatedProjects = getRelatedProjectCaseStudies(slug, 2);
 
+  const [repoInfo, setRepoInfo] = useState(null);
+
   useEffect(() => {
     const fetchReadme = async () => {
       if (!frontmatter.github) {
@@ -48,26 +50,34 @@ export default function ProjectCaseStudyPage() {
         const repo = pathParts[1];
         console.log(`Fetching README for ${owner}/${repo}`);
 
-        // 1. Fetch Repo Details to get default branch
-        const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
-        const repoData = await repoRes.json();
 
-        if (repoData && !repoData.message) {
-          const branch = repoData.default_branch || 'main';
+        // Try 'main' branch first, then 'master'
+        const branches = ['main', 'master'];
+        let content = null;
+        let successfulBranch = null;
 
-          // 2. Fetch README using correct branch
-          const readmeUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/README.md`;
-          const contentRes = await fetch(readmeUrl);
+        for (const branch of branches) {
+          try {
+            const readmeUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/README.md`;
+            const res = await fetch(readmeUrl);
 
-          if (!contentRes.ok) {
-            throw new Error(`Failed to fetch README (${contentRes.status})`);
+            if (res.ok) {
+              content = await res.text();
+              successfulBranch = branch;
+              break;
+            }
+          } catch (err) {
+            console.warn(`Failed to fetch from ${branch}:`, err);
+            fetchError = err;
           }
+        }
 
-          const text = await contentRes.text();
-          setReadmeContent(text);
+        if (content && successfulBranch) {
+          setReadmeContent(content);
+          setRepoInfo({ owner, repo, branch: successfulBranch });
           setError(null);
         } else {
-          throw new Error(repoData.message || 'Failed to fetch repository details');
+          throw new Error('Could not fetch README from main or master branch.');
         }
       } catch (error) {
         console.error("Error fetching README:", error);
@@ -80,9 +90,19 @@ export default function ProjectCaseStudyPage() {
     fetchReadme();
   }, [frontmatter.github]);
 
+  // Helper to resolve image URLs
+  const resolveImageUrl = (src) => {
+    if (!src || !repoInfo) return src;
+    if (src.startsWith('http') || src.startsWith('//')) return src;
+
+    // Remove leading ./ or /
+    const cleanPath = src.replace(/^(\.\/|\/)/, '');
+    return `https://raw.githubusercontent.com/${repoInfo.owner}/${repoInfo.repo}/${repoInfo.branch}/${cleanPath}`;
+  };
+
   return (
-    <Container className="py-16">
-      <div className="space-y-12">
+    <Container className="py-16 text-left">
+      <div className="text-left space-y-12">
         {/* Back Button */}
         <div>
           <Button variant="ghost" asChild className="group">
@@ -94,7 +114,16 @@ export default function ProjectCaseStudyPage() {
         </div>
 
         {/* Project Header */}
-        <div className="space-y-6">
+        <div className="space-y-6 text-left">
+          {frontmatter.image && (
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-border/50 bg-muted/30 shadow-sm">
+              <img
+                src={frontmatter.image}
+                alt={frontmatter.title}
+                className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+              />
+            </div>
+          )}
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{frontmatter.title}</h1>
           <p className="text-xl text-muted-foreground">{frontmatter.description}</p>
 
@@ -124,7 +153,7 @@ export default function ProjectCaseStudyPage() {
         <Separator />
 
         {/* Project Content / README */}
-        <div className="prose prose-neutral dark:prose-invert max-w-none">
+        <div className="prose prose-neutral dark:prose-invert max-w-none text-left [&>*]:text-left">
           {loading ? (
             <div className="flex justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -141,7 +170,10 @@ export default function ProjectCaseStudyPage() {
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
               components={{
-                img: ({ node, ...props }) => <img {...props} className="rounded-lg shadow-md max-w-full h-auto mx-auto" />,
+                img: ({ node, ...props }) => {
+                  const resolvedSrc = resolveImageUrl(props.src);
+                  return <img {...props} src={resolvedSrc} className="rounded-lg shadow-md max-w-full h-auto" />;
+                },
                 a: ({ node, ...props }) => <a {...props} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer" />
               }}
             >
