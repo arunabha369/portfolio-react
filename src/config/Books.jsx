@@ -88,7 +88,7 @@ export const books = [
         status: 'Completed',
         icon: <CheckCircle className="size-4" />,
         href: 'https://www.amazon.com/Bhagavad-Gita-2nd-Eknath-Easwaran/dp/1586380192',
-        image: 'https://covers.openlibrary.org/b/isbn/9781586380199-L.jpg'
+        image: '/assets/books/bhagavad-gita.jpg'
     },
     {
         name: 'Mastery',
@@ -112,7 +112,7 @@ export const books = [
         status: 'Wishlist',
         icon: <BookOpen className="size-4" />,
         href: 'https://www.amazon.com/Unfu-k-Yourself-Your-Head-into/dp/0062803832',
-        image: 'https://m.media-amazon.com/images/I/71f743sOPoL._AC_UF1000,1000_QL80_.jpg'
+        image: 'https://covers.openlibrary.org/b/isbn/9780062803832-L.jpg'
     },
     {
         name: "Man's Search for Meaning",
@@ -136,7 +136,7 @@ export const books = [
         status: 'Wishlist',
         icon: <BookOpen className="size-4" />,
         href: 'https://www.amazon.com/Dopamine-Detox-Distractions-Train-Things/dp/B0988R8Q65',
-        image: 'https://covers.openlibrary.org/b/isbn/9788183286015-L.jpg'
+        image: 'https://covers.openlibrary.org/b/isbn/9798525995178-L.jpg'
     },
     {
         name: 'Digital Minimalism',

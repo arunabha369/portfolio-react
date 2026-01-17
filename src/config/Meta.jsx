@@ -3,7 +3,7 @@ import { heroConfig } from './Hero';
 // Base site configuration
 export const siteConfig = {
   name: heroConfig.name,
-  title: 'Sleek Portfolio',
+  title: 'Arunabha Banerjee | Full Stack Developer',
   description: 'Sleek Portfolio Template by @arunabha369',
   url: process.env.NEXT_PUBLIC_URL || 'http://localhost:3000',
   ogImage: '/meta/opengraph-image.png',
@@ -19,7 +19,7 @@ export const siteConfig = {
 export const pageMetadata = {
   // Home page
   '/': {
-    title: `${heroConfig.name} - ${heroConfig.title}`,
+    title: 'Arunabha Banerjee | Full Stack Developer',
     description: `${about.description} Explore my projects, experience, and technical expertise.`,
     keywords: ['portfolio', 'developer', 'full-stack', 'web development', 'projects'],
     ogImage: '/meta/hero.png',
