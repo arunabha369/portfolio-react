@@ -294,6 +294,7 @@ const BlogDetail = () => {
                                 <div className="my-6 space-y-4">
                                     {section.code.map((rawCodeBlock, idx) => {
                                         const codeBlock = cleanCodeContent(rawCodeBlock);
+                                        if (!codeBlock) return null;
                                         return (
                                             <div key={idx} className="group relative mb-6">
                                                 <div className="bg-[#0d1117] overflow-x-auto rounded-lg border border-border p-4 text-sm font-mono text-zinc-300">

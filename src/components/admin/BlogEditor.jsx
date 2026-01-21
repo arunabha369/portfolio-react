@@ -148,7 +148,7 @@ const BlogEditor = () => {
                 heading: s.heading,
                 content: s.content,
                 image: (Array.isArray(s.image) ? s.image : (s.image ? [s.image] : [])).filter(img => img && img.trim() !== ''),
-                code: Array.isArray(s.code) ? s.code : (s.code ? [s.code] : []),
+                code: (Array.isArray(s.code) ? s.code : (s.code ? [s.code] : [])).filter(c => c && c.trim() !== ''),
                 code_language: Array.isArray(s.code_language) ? s.code_language : (s.code_language ? [s.code_language] : []),
                 "order": idx + 1
             }));
