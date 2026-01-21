@@ -31,27 +31,14 @@ const getTextContent = (node) => {
 };
 
 // Helper to clean code content (remove backticks and excessive whitespace)
+// Helper to clean code content (remove backticks and excessive whitespace)
 const cleanCodeContent = (content) => {
     if (!content) return '';
-    // Use getTextContent to handle both strings and React nodes (arrays)
     let cleaned = getTextContent(content).trim();
 
-    // Split into lines to safely inspect first/last lines for fences
-    const lines = cleaned.split(/\r?\n/);
-
-    // Check first line for fence pattern (e.g. ```javascript or `)
-    // Matches start of line, 1+ backticks, optional whitespace, optional alphanumeric identifier, end of line
-    if (lines.length > 0 && /^\s*`{1,}\s*([a-zA-Z0-9-]*)?\s*$/.test(lines[0])) {
-        lines.shift(); // Remove the first line
-    }
-
-    // Check last line for closing fence pattern (e.g. ``` or `)
-    // Matches start of line, optional whitespace, 1+ backticks, optional whitespace, end of line
-    if (lines.length > 0 && /^\s*`{1,}\s*$/.test(lines[lines.length - 1])) {
-        lines.pop(); // Remove the last line
-    }
-
-    return lines.join('\n').trim();
+    // Aggressively remove all leading/trailing backticks and whitespace
+    // This handles single backticks, triple fences, and mixed whitespace
+    return cleaned.replace(/^[\s`]+|[\s`]+$/g, '');
 };
 
 // --- MARKDOWN STYLES ---
@@ -62,8 +49,8 @@ const markdownComponents = {
     p: ({ node, ...props }) => <p className="leading-7 text-base text-muted-foreground mb-5" {...props} />,
     ul: ({ node, ...props }) => <ul className="list-disc list-outside ml-5 mb-5 space-y-2 text-muted-foreground text-base" {...props} />,
     ol: ({ node, ...props }) => <ol className="list-decimal list-outside ml-5 mb-5 space-y-2 text-muted-foreground text-base" {...props} />,
-    // pre is handled by code component or default behavior mixed with code logic above
-    // pre: ({ children, ...props }) => <div {...props}>{children}</div>,
+    // Override pre to avoid double wrapping/styling since we handle code block styling in the 'code' component
+    pre: ({ children }) => <>{children}</>,
     code: ({ node, inline, className, children, ...props }) => {
         const match = /language-(\w+)/.exec(className || '');
         const language = match ? match[1] : '';
@@ -75,7 +62,7 @@ const markdownComponents = {
                     className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground font-medium"
                     {...props}
                 >
-                    {children}
+                    {codeContent}
                 </code>
             );
         }
