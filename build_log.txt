@@ -1,0 +1,29 @@
+
+> sleek-portfolio-react@0.0.0 build
+> vite build
+
+vite v7.3.1 building client environment for production...
+transforming...
+✓ 6434 modules transformed.
+✗ Build failed in 7.83s
+error during build:
+src/components/landing/Blog.jsx (4:9): "BlogCard" is not exported by "src/components/blog/BlogCard.jsx", imported by "src/components/landing/Blog.jsx".
+file: /Users/arunabhabanerjee/portfolio-react/src/components/landing/Blog.jsx:4:9
+
+2: import Link from '@/components/ui/Link';
+3: import React from 'react';
+4: import { BlogCard } from '../blog/BlogCard';
+            ^
+5: import Container from '../common/Container';
+6: import SectionHeading from '../common/SectionHeading';
+
+    at getRollupError (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/parseAst.js:397:42)
+    at Module.error (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:17022:16)
+    at Module.traceVariable (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:17478:29)
+    at ModuleScope.findVariable (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:15141:39)
+    at FunctionScope.findVariable (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:5688:38)
+    at FunctionBodyScope.findVariable (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:5688:38)
+    at ReturnValueScope.findVariable (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:5688:38)
+    at FunctionBodyScope.findVariable (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:5688:38)
+    at Identifier.bind (file:///Users/arunabhabanerjee/portfolio-react/node_modules/rollup/dist/es/shared/node-entry.js:5462:40)
