@@ -6,7 +6,7 @@ A modern, high-performance developer portfolio built with the latest web technol
 
 - **🎨 Modern UI/UX:** Built with React 18, TailwindCSS v4, and Shadcn/UI for a premium aesthetic. Includes dark mode support.
 - **📝 Dynamic Blog:** Full-featured blog system supporting MDX, code highlighting, and admin management.
-- **🤖 AI Assistant:** Integrated Gemini AI chatbot ("CodeMate") to answer visitor questions about your portfolio.
+- **🤖 AI Assistant:** Integrated AI chatbot powered by [portfolio-chatbot](https://github.com/arunabha369/portfolio-chatbot) to answer visitor questions. Uses RAG (Retrieval-Augmented Generation) with Groq (GPT-OSS 120B) and LangChain to provide context-aware responses based on your portfolio data.
 - **🔐 Admin Dashboard:** Secure route for creating and editing blog posts directly from the UI.
 - **📬 Smart Contact:** Contact form integrated with Telegram for instant notifications on your phone.
 - **⚡ Super Fast:** Powered by Vite, with smooth page transitions using Lenis and Framer Motion.
@@ -24,7 +24,11 @@ A modern, high-performance developer portfolio built with the latest web technol
 ### Backend & Services
 - **Database & Auth:** [Supabase](https://supabase.com/)
 - **Server:** Node.js / Express (for API proxying & AI integration)
-- **AI Model:** [Google Gemini API](https://ai.google.dev/)
+- **Chatbot Backend:** [Portfolio Chatbot](https://github.com/arunabha369/portfolio-chatbot)
+  - **Runtime:** Node.js, Express
+  - **LLM:** Groq (GPT-OSS 120B)
+  - **Orchestration:** LangChain.js
+  - **Context:** Local RAG with HNSWLib & Xenova embeddings
 - **Notifications:** Telegram Bot API
 - **Forms:** Zod for validation
 
@@ -34,7 +38,6 @@ A modern, high-performance developer portfolio built with the latest web technol
 - Node.js (v18 or higher)
 - npm or yarn
 - A Supabase project
-- A Google Cloud project with Gemini API access
 - A Telegram Bot (for contact form notifications)
 
 ### 1. Clone the Repository
@@ -59,8 +62,6 @@ PORT=3001
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-# Google Gemini AI (for Chatbot)
-GEMINI_API_KEY=your_gemini_api_key
 
 # Telegram Notifications (for Contact Form)
 TELEGRAM_BOT_TOKEN=your_telegram_bot_token
@@ -80,7 +81,7 @@ npm run dev
 
 ```
 portfolio-react/
-├── server/                 # Express backend for AI & Contact
+├── server/                 # Express backend for Contact form
 │   └── index.js           # Main server entry point
 ├── src/
 │   ├── components/        # Reusable UI components
