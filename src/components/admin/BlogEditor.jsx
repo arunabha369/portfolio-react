@@ -112,6 +112,23 @@ const BlogEditor = () => {
         }
     };
 
+    // Auto-resize textarea helper
+    const adjustTextareaHeight = (element) => {
+        if (element) {
+            element.style.height = 'auto'; // Reset height
+            element.style.height = `${element.scrollHeight}px`; // Set to scroll height
+        }
+    };
+
+    // Effect to resize textareas when sections change (e.g. initial load or add/move)
+    useEffect(() => {
+        const textareas = document.querySelectorAll('textarea.auto-resize');
+        textareas.forEach(textarea => {
+            adjustTextareaHeight(textarea);
+        });
+    }, [sections]);
+
+
     const handleSave = async () => {
         setSaving(true);
         try {
@@ -318,11 +335,15 @@ const BlogEditor = () => {
                                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                                     <FaAlignLeft color="#444" size={20} style={{ marginTop: '0.8rem' }} />
                                     <textarea
+                                        className="auto-resize"
                                         value={section.content}
-                                        onChange={(e) => handleSectionChange(index, 'content', e.target.value)}
+                                        onChange={(e) => {
+                                            handleSectionChange(index, 'content', e.target.value);
+                                            adjustTextareaHeight(e.target);
+                                        }}
                                         placeholder="Section content (supports basic markdown)..."
-                                        rows="6"
-                                        style={{ flex: 1, padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#ccc', fontFamily: 'inherit', lineHeight: '1.6', resize: 'vertical' }}
+                                        rows="1"
+                                        style={{ flex: 1, padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#ccc', fontFamily: 'inherit', lineHeight: '1.6', resize: 'none', overflow: 'hidden', minHeight: '150px' }}
                                     />
                                 </div>
 
@@ -357,11 +378,15 @@ const BlogEditor = () => {
                                                 style={{ width: '100%', padding: '0.4rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '6px', color: '#888', fontSize: '0.85rem' }}
                                             />
                                             <textarea
+                                                className="auto-resize"
                                                 value={getStringVal(section.code)}
-                                                onChange={(e) => handleSectionChange(index, 'code', [e.target.value])}
+                                                onChange={(e) => {
+                                                    handleSectionChange(index, 'code', [e.target.value]);
+                                                    adjustTextareaHeight(e.target);
+                                                }}
                                                 placeholder="Paste code here..."
-                                                rows="3"
-                                                style={{ width: '100%', padding: '0.6rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '6px', color: '#d4d4d4', fontFamily: 'monospace', fontSize: '0.85rem' }}
+                                                rows="1"
+                                                style={{ width: '100%', padding: '0.6rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '6px', color: '#d4d4d4', fontFamily: 'monospace', fontSize: '0.85rem', resize: 'none', overflow: 'hidden', minHeight: '80px' }}
                                             />
                                         </div>
                                     </div>
