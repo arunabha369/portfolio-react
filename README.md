@@ -1,4 +1,4 @@
-# ⚡ Sleek Portfolio
+# ⚡ Arunabha's Portfolio
 
 A modern, high-performance developer portfolio built with the latest web technologies. This project features a dynamic blog system, AI-powered chat assistant, admin dashboard, and a highly responsive UI with smooth animations.
 
