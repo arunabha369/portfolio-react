@@ -1,16 +1,106 @@
-# React + Vite
+# ⚡ Sleek Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance developer portfolio built with the latest web technologies. This project features a dynamic blog system, AI-powered chat assistant, admin dashboard, and a highly responsive UI with smooth animations.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **🎨 Modern UI/UX:** Built with React 18, TailwindCSS v4, and Shadcn/UI for a premium aesthetic. Includes dark mode support.
+- **📝 Dynamic Blog:** Full-featured blog system supporting MDX, code highlighting, and admin management.
+- **🤖 AI Assistant:** Integrated Gemini AI chatbot ("CodeMate") to answer visitor questions about your portfolio.
+- **🔐 Admin Dashboard:** Secure route for creating and editing blog posts directly from the UI.
+- **📬 Smart Contact:** Contact form integrated with Telegram for instant notifications on your phone.
+- **⚡ Super Fast:** Powered by Vite, with smooth page transitions using Lenis and Framer Motion.
+- **📊 Comprehensive:** Sections for Projects, Work Experience, Tech Stack, Gear, Books, and more.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
+- **Core:** [React 18](https://react.dev/), [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/), [Shadcn/UI](https://ui.shadcn.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/), [Lenis](https://lenis.darkroom.engineering/) (Smooth Scroll)
+- **Routing:** [React Router v7](https://reactrouter.com/)
+- **Icons:** Phosphor Icons, Lucide React
 
-## Expanding the ESLint configuration
+### Backend & Services
+- **Database & Auth:** [Supabase](https://supabase.com/)
+- **Server:** Node.js / Express (for API proxying & AI integration)
+- **AI Model:** [Google Gemini API](https://ai.google.dev/)
+- **Notifications:** Telegram Bot API
+- **Forms:** Zod for validation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🏗️ Installation & Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- A Supabase project
+- A Google Cloud project with Gemini API access
+- A Telegram Bot (for contact form notifications)
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/portfolio-react.git
+cd portfolio-react
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Environment Variables
+Create a `.env` file in the root directory and add the following keys:
+
+```env
+# Server Configuration
+PORT=3001
+
+# Supabase (for Frontend)
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Google Gemini AI (for Chatbot)
+GEMINI_API_KEY=your_gemini_api_key
+
+# Telegram Notifications (for Contact Form)
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_telegram_chat_id
+```
+
+### 4. Run Locally
+To run both the frontend and the backend server concurrently:
+
+```bash
+npm run dev
+```
+- Frontend will run on `http://localhost:5173`
+- Backend API will run on `http://localhost:3001`
+
+## 📂 Project Structure
+
+```
+portfolio-react/
+├── server/                 # Express backend for AI & Contact
+│   └── index.js           # Main server entry point
+├── src/
+│   ├── components/        # Reusable UI components
+│   │   ├── admin/         # Admin dashboard components
+│   │   ├── auth/          # Authentication handlers
+│   │   ├── blog/          # Blog rendering & cards
+│   │   └── ui/            # Shadcn UI primitives
+│   ├── pages/             # Main route pages (Home, Projects, Blog...)
+│   ├── config/            # Static configuration files
+│   ├── hooks/             # Custom React hooks
+│   └── App.jsx            # Main application router
+├── public/                # Static assets
+└── package.json           # Project dependencies & scripts
+```
+
+## 🔒 Admin Access
+The admin routes (`/admin`) are protected. You need to be authenticated via Supabase to access the dashboard for creating or editing blog posts.
+
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
