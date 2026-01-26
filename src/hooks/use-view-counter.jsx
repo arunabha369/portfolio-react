@@ -26,18 +26,24 @@ const useViewCounter = (slug = 'portfolio-main') => {
                         .from('counter')
                         .select('count')
                         .eq('id', slug)
-                        .single();
+                        .maybeSingle(); // Use maybeSingle to avoid 406 error if no rows
+
+                    if (fetchError) console.error('Error fetching initial count:', fetchError);
 
                     let newCount = 1;
                     if (currentData) {
                         newCount = currentData.count + 1;
                     }
 
-                    const { error: upsertError } = await supabase
+                    const { data: upsertData, error: upsertError } = await supabase
                         .from('counter')
-                        .upsert({ id: slug, count: newCount }, { onConflict: 'id' });
+                        .upsert({ id: slug, count: newCount }, { onConflict: 'id' })
+                        .select()
+                        .single();
 
-                    if (!upsertError) {
+                    if (upsertError) {
+                        console.error('Error updating count:', upsertError);
+                    } else {
                         sessionStorage.setItem(storageKey, 'true');
                         setViews(newCount);
                     }
@@ -47,14 +53,21 @@ const useViewCounter = (slug = 'portfolio-main') => {
                         .from('counter')
                         .select('count')
                         .eq('id', slug)
-                        .single();
+                        .maybeSingle(); // Use maybeSingle
+
+                    if (error) {
+                        console.error('Error fetching existing count:', error);
+                    }
 
                     if (data) {
                         setViews(data.count);
+                    } else {
+                        setViews(0); // If no row exists yet
                     }
                 }
             } catch (error) {
-                console.error('Error updating view count:', error);
+                console.error('Unexpected error in useViewCounter:', error);
+                setViews(0);
             } finally {
                 setLoading(false);
             }
