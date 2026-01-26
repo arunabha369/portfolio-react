@@ -2,11 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Link } from 'react-router-dom';
 import { FaPlus, FaEdit, FaTrash, FaCheckCircle, FaTimesCircle, FaEye, FaThumbtack } from 'react-icons/fa';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "../../components/ui/alert-dialog";
 
 const AdminDashboard = () => {
     const [blogs, setBlogs] = useState([]);
     const [stats, setStats] = useState({ total: 0, published: 0, views: 0 });
     const [loading, setLoading] = useState(true);
+    const [blogToDelete, setBlogToDelete] = useState(null);
 
     useEffect(() => {
         fetchBlogs();
@@ -56,18 +67,23 @@ const AdminDashboard = () => {
         }
     };
 
-    const deleteBlog = async (id) => {
-        if (!confirm('Are you sure you want to delete this blog? This cannot be undone.')) return;
+    const deleteBlog = (id) => {
+        setBlogToDelete(id);
+    };
+
+    const confirmDelete = async () => {
+        if (!blogToDelete) return;
 
         const { error } = await supabase
             .from('blogs')
             .delete()
-            .eq('id', id);
+            .eq('id', blogToDelete);
 
         if (!error) {
-            setBlogs(blogs.filter(b => b.id !== id));
+            setBlogs(blogs.filter(b => b.id !== blogToDelete));
             setStats(prev => ({ ...prev, total: prev.total - 1 }));
         }
+        setBlogToDelete(null);
     };
 
     if (loading) {
@@ -185,6 +201,21 @@ const AdminDashboard = () => {
                     )}
                 </div>
             </div>
+
+            <AlertDialog open={!!blogToDelete} onOpenChange={(open) => !open && setBlogToDelete(null)}>
+                <AlertDialogContent className="bg-[#111] border-[#333] text-white">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-[#888]">
+                            This action cannot be undone. This will permanently delete your blog post.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel className="bg-transparent border-[#333] text-white hover:bg-[#222] hover:text-white">Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={confirmDelete} className="bg-red-600 hover:bg-red-700 text-white border-none">Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 };
