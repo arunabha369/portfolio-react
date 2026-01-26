@@ -5,6 +5,7 @@ import { books } from '@/config/Books';
 import { Book } from 'lucide-react';
 import { generateMetadata as getMetadata } from '@/config/Meta';
 import BookCard from '@/components/books/BookCard';
+import { Helmet } from 'react-helmet-async';
 
 export const metadata = {
     ...getMetadata('/books'),
@@ -24,6 +25,9 @@ export const metadata = {
 export default function Books() {
     return (
         <Container className="py-16">
+            <Helmet>
+                <title>Books | Arunabha Banerjee</title>
+            </Helmet>
             <div className="space-y-8">
                 {/* Header */}
                 <div className="space-y-4 text-center">

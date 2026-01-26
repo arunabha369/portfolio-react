@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { projects } from '@/config/Projects';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState('all');
@@ -21,6 +22,9 @@ export default function ProjectsPage() {
 
   return (
     <Container className="py-16">
+      <Helmet>
+        <title>Projects | Arunabha Banerjee</title>
+      </Helmet>
       <div className="space-y-8">
         {/* Header */}
         <div className="space-y-4 text-center">

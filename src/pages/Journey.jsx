@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator';
 // import { generateMetadata as getMetadata } from '@/config/Meta'; 
 import JourneyContent from '@/data/journey/journey.mdx';
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 // Metadata export is not supported in Vite this way, disabling it for now or needs to be handled via react-helmet-async
 /*
@@ -22,6 +23,9 @@ export default function JourneyPage() {
 
   return (
     <Container className="py-16">
+      <Helmet>
+        <title>Journey | Arunabha Banerjee</title>
+      </Helmet>
       <div className="space-y-8">
         <div className="space-y-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">

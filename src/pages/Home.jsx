@@ -8,8 +8,13 @@ import Journey from '@/components/landing/Journey';
 import Work from '@/components/landing/Projects';
 
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+
 export default function page() {
   return <Container className="min-h-screen py-16">
+    <Helmet>
+      <title>Arunabha Banerjee | Full Stack Developer</title>
+    </Helmet>
     <Hero />
     <Work />
     <About />

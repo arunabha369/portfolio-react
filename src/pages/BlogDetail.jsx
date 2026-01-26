@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Terminal } from 'lucide-react';
 import ArrowLeft from '@/components/svgs/ArrowLeft';
 import { supabase } from '../lib/supabase';
+import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -112,6 +113,8 @@ const BlogDetail = () => {
         setVisitorId(vid);
     }, []);
 
+
+
     useEffect(() => {
         const fetchBlogAndSections = async () => {
             try {
@@ -177,6 +180,9 @@ const BlogDetail = () => {
 
     return (
         <Container className="py-16">
+            <Helmet>
+                <title>{blog ? `${blog.title} | Arunabha Banerjee` : 'Loading...'}</title>
+            </Helmet>
             <article className="mx-auto max-w-4xl space-y-12">
                 {/* Back Button */}
                 <div>

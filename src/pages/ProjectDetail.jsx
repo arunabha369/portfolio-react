@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getProjectCaseStudyBySlug, getProjectNavigation, getRelatedProjectCaseStudies } from '@/lib/project';
 import Link from '@/components/ui/Link';
+import { Helmet } from 'react-helmet-async';
 import NotFound from '@/pages/NotFound';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -102,6 +103,9 @@ export default function ProjectCaseStudyPage() {
 
   return (
     <Container className="py-16 text-left">
+      <Helmet>
+        <title>{frontmatter.title} | Arunabha Banerjee</title>
+      </Helmet>
       <div className="text-left space-y-12">
         {/* Back Button */}
         <div>

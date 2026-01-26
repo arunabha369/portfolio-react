@@ -5,6 +5,7 @@ import BlogList from '../components/blog/BlogList';
 import Container from '../components/common/Container';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Helmet } from 'react-helmet-async';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -78,6 +79,9 @@ const Blog = () => {
 
   return (
     <Container className="py-16">
+      <Helmet>
+        <title>Blogs | Arunabha Banerjee</title>
+      </Helmet>
       <div className="space-y-8">
         {/* Header */}
         <div className="space-y-4 text-center">
