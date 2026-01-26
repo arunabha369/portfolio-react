@@ -32,14 +32,43 @@ const getTextContent = (node) => {
 };
 
 // Helper to clean code content (remove backticks and excessive whitespace)
-// Helper to clean code content (remove backticks and excessive whitespace)
 const cleanCodeContent = (content) => {
     if (!content) return '';
     let cleaned = getTextContent(content).trim();
 
-    // Aggressively remove all leading/trailing backticks and whitespace
-    // This handles single backticks, triple fences, and mixed whitespace
-    return cleaned.replace(/^[\s`]+|[\s`]+$/g, '');
+    // Split into lines to safely handle fences
+    const lines = cleaned.split('\n');
+
+    // Check first line for fence
+    if (lines.length > 0 && lines[0].trim().startsWith('```')) {
+        lines.shift();
+    }
+
+    // Check last line for fence
+    if (lines.length > 0 && lines[lines.length - 1].trim().startsWith('```')) {
+        lines.pop();
+    }
+
+    cleaned = lines.join('\n').trim();
+
+    // Handle inline backticks (surrounded by single or double backticks)
+    if (cleaned.startsWith('`') && cleaned.endsWith('`') && cleaned.length >= 2) {
+        // Count leading/trailing backticks
+        const matchLeading = cleaned.match(/^`+/);
+        const matchTrailing = cleaned.match(/`+$/);
+
+        if (matchLeading && matchTrailing) {
+            const leadingCount = matchLeading[0].length;
+            const trailingCount = matchTrailing[0].length;
+
+            // Only strip if they match and it looks like a wrapper
+            if (leadingCount === trailingCount) {
+                cleaned = cleaned.substring(leadingCount, cleaned.length - trailingCount);
+            }
+        }
+    }
+
+    return cleaned.trim();
 };
 
 // --- MARKDOWN STYLES ---

@@ -128,6 +128,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -160,6 +161,7 @@
     opacity: 0.2;
     filter: blur(5px);
   }
+
   100% {
     opacity: 1;
     filter: blur(0px);
@@ -263,4 +265,10 @@
 
 .prose h4 {
   font-size: calc(var(--blog-font-size) * 1.25);
+}
+
+/* Remove default backticks from Tailwind Typography code blocks */
+.prose :where(code):not(:where([class~="not-prose"] *))::before,
+.prose :where(code):not(:where([class~="not-prose"] *))::after {
+  content: none !important;
 }
