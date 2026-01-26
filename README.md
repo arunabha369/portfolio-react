@@ -30,7 +30,8 @@ A modern, high-performance developer portfolio built with the latest web technol
   - **Orchestration:** LangChain.js
   - **Context:** Local RAG with HNSWLib & Xenova embeddings
 - **Notifications:** Telegram Bot API
-- **Forms:** Zod for validation
+- **Forms:** [Formspree](https://formspree.io/) for contact submissions, [Zod](https://zod.dev/) for schema validation
+
 
 ## 🏗️ Installation & Setup
 
