@@ -89,6 +89,19 @@ const BlogInteractionBar = ({ blog, visitorId }) => {
                     colors: ['#eab308', '#ca8a04', '#fde047'], // Gold/Yellow shades
                     disableForReducedMotion: true
                 });
+            } else if (type === 'like') {
+                // Trigger Red Confetti for Heart
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = (rect.left + rect.width / 2) / window.innerWidth;
+                const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { x, y },
+                    colors: ['#ef4444', '#dc2626', '#b91c1c'], // Red shades
+                    disableForReducedMotion: true
+                });
             }
         }
 
