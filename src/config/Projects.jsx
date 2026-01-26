@@ -27,9 +27,9 @@ export const projects = [
         title: "HRSphere",
         description: "A scalable Human Resource Management System that streamlines core HR processes — from employee records and attendance to recruitment, payroll, and performance.",
         image: '/project/hrsphere.png',
-        link: 'https://hr-sphere-beta.vercel.app/',
+        link: 'https://hrsphere.arunabha.dev/',
         github: 'https://github.com/arunabha369/HRSphere',
-        live: 'https://hr-sphere-beta.vercel.app/',
+        live: 'https://hrsphere.arunabha.dev/',
         technologies: [
             { name: 'React', icon: <ReactIcon key="react" /> },
             { name: 'Node.js', icon: <NodeJs key="nodejs" /> },
@@ -60,9 +60,9 @@ export const projects = [
         title: "CodeMate",
         description: "A MERN-based developer matchmaking platform that helps programmers discover collaborators though swipe-based matching.",
         image: '/project/codemate.png',
-        link: 'https://code-mate-gamma.vercel.app/',
+        link: 'https://codemate.arunabha.dev/',
         github: 'https://github.com/arunabha369/CodeMate',
-        live: 'https://code-mate-gamma.vercel.app/',
+        live: 'https://codemate.arunabha.dev/',
         technologies: [
             { name: 'React', icon: <ReactIcon key="react" /> },
             { name: 'Tailwind CSS', icon: <TailwindCss key="tailwind" /> },
