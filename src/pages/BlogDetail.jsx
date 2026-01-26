@@ -157,8 +157,20 @@ const BlogDetail = () => {
                 if (blogError) throw blogError;
                 setBlog(blogData);
 
-                // 2. Fetch Sections
                 if (blogData) {
+                    // Increment View Count
+                    const { error: viewError } = await supabase.rpc('increment_blog_view', { blog_id: blogData.id });
+
+                    // Fallback if RPC doesn't exist (optimistic update attempts often fail without RLS policies allowing generic updates, so RPC is safer usually, but let's try a standard update if RPC fails or just standard update first if we assume user can't run SQL easily). 
+                    // Actually, the user can run SQL. I'll stick to a standard update pattern for simplicity unless I see an RPC pattern elsewhere.
+                    // Let's use a standard update relative to the fetched data.
+                    const { error: updateError } = await supabase
+                        .from('blogs')
+                        .update({ views: (blogData.views || 0) + 1 })
+                        .eq('id', blogData.id);
+
+                    if (updateError) console.error('Error incrementing views:', updateError);
+
                     const { data: sectionsData, error: sectionsError } = await supabase
                         .from('blog_sections')
                         .select('*')

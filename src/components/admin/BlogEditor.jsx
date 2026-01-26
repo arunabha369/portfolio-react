@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { FaArrowLeft, FaSave, FaPlus, FaTrash, FaImage, FaCode, FaHeading, FaAlignLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaSave, FaPlus, FaTrash, FaImage, FaCode, FaHeading, FaAlignLeft, FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 const BlogEditor = () => {
     const { id } = useParams(); // If ID exists, we are editing
@@ -186,116 +186,104 @@ const BlogEditor = () => {
         }
     };
 
-    if (loading) return <div style={{ minHeight: '100vh', backgroundColor: '#050505', color: '#fff', padding: '100px', textAlign: 'center' }}>Loading Editor...</div>;
+    if (loading) return <div className="min-h-screen bg-[#050505] text-white p-24 text-center">Loading Editor...</div>;
 
     // Helper to safely get value from potential array or string state
     const getStringVal = (val) => Array.isArray(val) ? val[0] || '' : val || '';
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#050505', color: '#fff', paddingTop: '100px', paddingBottom: '100px' }}>
-            <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem' }}>
+        <div className="min-h-screen bg-[#050505] text-white pt-24 pb-24">
+            <div className="container max-w-[900px] mx-auto px-4 md:px-8">
 
                 {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                    <Link to="/admin" style={{ color: '#888', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div className="flex justify-between items-center mb-8">
+                    <Link to="/admin" className="text-[#888] flex items-center gap-2 hover:text-white transition-colors">
                         <FaArrowLeft /> Cancel
                     </Link>
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        style={{
-                            backgroundColor: '#fff',
-                            color: '#000',
-                            padding: '0.8rem 2rem',
-                            borderRadius: '50px',
-                            fontWeight: '600',
-                            border: 'none',
-                            cursor: saving ? 'wait' : 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            opacity: saving ? 0.7 : 1
-                        }}
+                        className={`bg-white text-black px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 ${saving ? 'cursor-wait' : 'cursor-pointer'}`}
                     >
                         <FaSave /> {saving ? 'Saving...' : 'Save Blog'}
                     </button>
                 </div>
 
                 {/* Metadata Card */}
-                <div style={{ backgroundColor: '#111', padding: '2rem', borderRadius: '16px', border: '1px solid #222', marginBottom: '2rem' }}>
-                    <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#888' }}>Metadata</h2>
+                <div className="bg-[#111] p-6 md:p-8 rounded-2xl border border-[#222] mb-8 shadow-sm">
+                    <h2 className="text-xl mb-6 text-[#888]">Metadata</h2>
 
-                    <div style={{ display: 'grid', gap: '1.5rem' }}>
+                    <div className="grid gap-6">
                         <div>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Title</label>
+                            <label className="block mb-2 text-sm text-[#ccc]">Title</label>
                             <input
                                 name="title"
                                 value={blogData.title}
                                 onChange={handleBlogChange}
-                                style={{ width: '100%', padding: '1rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#fff', fontSize: '1.1rem' }}
+                                className="w-full p-4 bg-[#050505] border border-[#333] rounded-lg text-white text-lg focus:border-white focus:outline-none transition-colors"
                                 placeholder="Enter blog title..."
                             />
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Slug (URL)</label>
+                                <label className="block mb-2 text-sm text-[#ccc]">Slug (URL)</label>
                                 <input
                                     name="slug"
                                     value={blogData.slug}
                                     onChange={handleBlogChange}
-                                    style={{ width: '100%', padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#888' }}
+                                    className="w-full p-3 bg-[#050505] border border-[#333] rounded-lg text-[#888] focus:border-[#666] focus:outline-none transition-colors"
                                 />
                             </div>
                             <div>
-                                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Tags (comma separated)</label>
+                                <label className="block mb-2 text-sm text-[#ccc]">Tags (comma separated)</label>
                                 <input
                                     name="tags"
                                     value={blogData.tags}
                                     onChange={handleBlogChange}
                                     placeholder="React, CSS, Tutorial"
-                                    style={{ width: '100%', padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#fff' }}
+                                    className="w-full p-3 bg-[#050505] border border-[#333] rounded-lg text-white focus:border-white focus:outline-none transition-colors"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Cover Image URL</label>
-                            <div style={{ display: 'flex', gap: '1rem' }}>
+                            <label className="block mb-2 text-sm text-[#ccc]">Cover Image URL</label>
+                            <div className="flex gap-4">
                                 <input
                                     name="cover_image"
                                     value={blogData.cover_image}
                                     onChange={handleBlogChange}
                                     placeholder="https://..."
-                                    style={{ flex: 1, padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#fff' }}
+                                    className="flex-1 p-3 bg-[#050505] border border-[#333] rounded-lg text-white focus:border-white focus:outline-none transition-colors"
                                 />
                                 {blogData.cover_image && (
-                                    <div style={{ width: '60px', height: '45px', borderRadius: '4px', overflow: 'hidden', border: '1px solid #333' }}>
-                                        <img src={blogData.cover_image} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Preview" />
+                                    <div className="w-[60px] h-[45px] rounded border border-[#333] overflow-hidden flex-shrink-0">
+                                        <img src={blogData.cover_image} className="w-full h-full object-cover" alt="Preview" />
                                     </div>
                                 )}
                             </div>
                         </div>
 
                         <div>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Short Description</label>
+                            <label className="block mb-2 text-sm text-[#ccc]">Short Description</label>
                             <textarea
                                 name="description"
                                 value={blogData.description}
                                 onChange={handleBlogChange}
                                 rows="3"
-                                style={{ width: '100%', padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#fff', fontFamily: 'inherit' }}
+                                className="w-full p-3 bg-[#050505] border border-[#333] rounded-lg text-white font-inherit focus:border-white focus:outline-none transition-colors"
                             />
                         </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                        <div className="flex items-center gap-4">
+                            <label className="flex items-center gap-2 cursor-pointer select-none">
                                 <input
                                     type="checkbox"
                                     name="is_published"
                                     checked={blogData.is_published}
                                     onChange={(e) => setBlogData(prev => ({ ...prev, is_published: e.target.checked }))}
-                                    style={{ width: '18px', height: '18px' }}
+                                    className="w-5 h-5 accent-white"
                                 />
                                 <span>Publish immediately</span>
                             </label>
@@ -304,38 +292,38 @@ const BlogEditor = () => {
                 </div>
 
                 {/* Sections Editor */}
-                <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', paddingLeft: '0.5rem' }}>Content Sections</h2>
+                <h2 className="text-2xl mb-6 pl-2">Content Sections</h2>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                <div className="flex flex-col gap-8">
                     {sections.map((section, index) => (
-                        <div key={index} style={{ backgroundColor: '#111', borderRadius: '16px', border: '1px solid #333', overflow: 'hidden' }}>
+                        <div key={index} className="bg-[#111] rounded-2xl border border-[#333] overflow-hidden shadow-sm">
                             {/* Section Toolbar */}
-                            <div style={{ backgroundColor: '#1a1a1a', padding: '0.8rem 1.5rem', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontWeight: '600', color: '#666' }}>Section {index + 1}</span>
-                                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                    <button onClick={() => moveSection(index, 'up')} disabled={index === 0} style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer', opacity: index === 0 ? 0.3 : 1 }}>▲</button>
-                                    <button onClick={() => moveSection(index, 'down')} disabled={index === sections.length - 1} style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer', opacity: index === sections.length - 1 ? 0.3 : 1 }}>▼</button>
-                                    <button onClick={() => removeSection(index)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', marginLeft: '1rem' }}><FaTrash /></button>
+                            <div className="bg-[#1a1a1a] px-6 py-3 border-b border-[#333] flex justify-between items-center">
+                                <span className="font-semibold text-[#666]">Section {index + 1}</span>
+                                <div className="flex items-center gap-2">
+                                    <button onClick={() => moveSection(index, 'up')} disabled={index === 0} className="text-white bg-transparent border-0 p-2 cursor-pointer hover:bg-[#333] rounded disabled:opacity-30 disabled:hover:bg-transparent"><FaChevronUp /></button>
+                                    <button onClick={() => moveSection(index, 'down')} disabled={index === sections.length - 1} className="text-white bg-transparent border-0 p-2 cursor-pointer hover:bg-[#333] rounded disabled:opacity-30 disabled:hover:bg-transparent"><FaChevronDown /></button>
+                                    <button onClick={() => removeSection(index)} className="text-red-500 bg-transparent border-0 p-2 ml-4 cursor-pointer hover:bg-[#333] rounded transition-colors"><FaTrash /></button>
                                 </div>
                             </div>
 
-                            <div style={{ padding: '1.5rem', display: 'grid', gap: '1.5rem' }}>
+                            <div className="p-6 grid gap-6">
                                 {/* Heading */}
-                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                    <FaHeading color="#444" size={20} />
+                                <div className="flex gap-4 items-center">
+                                    <FaHeading className="text-[#444] text-xl flex-shrink-0" />
                                     <input
                                         value={section.heading}
                                         onChange={(e) => handleSectionChange(index, 'heading', e.target.value)}
                                         placeholder="Section Heading"
-                                        style={{ flex: 1, padding: '0.8rem', background: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#fff', fontSize: '1.1rem', fontWeight: '600', outline: 'none' }}
+                                        className="flex-1 p-3 bg-transparent border-b border-[#333] text-white text-lg font-semibold placeholder-[#444] focus:border-white focus:outline-none transition-colors"
                                     />
                                 </div>
 
                                 {/* Content */}
-                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                                    <FaAlignLeft color="#444" size={20} style={{ marginTop: '0.8rem' }} />
+                                <div className="flex gap-4 items-start">
+                                    <FaAlignLeft className="text-[#444] text-xl mt-3 flex-shrink-0" />
                                     <textarea
-                                        className="auto-resize"
+                                        className="auto-resize w-full flex-1 p-3 bg-[#050505] border border-[#333] rounded-lg text-[#ccc] leading-relaxed resize-none overflow-hidden min-h-[150px] focus:border-[#666] focus:outline-none transition-colors"
                                         value={section.content}
                                         onChange={(e) => {
                                             handleSectionChange(index, 'content', e.target.value);
@@ -343,42 +331,41 @@ const BlogEditor = () => {
                                         }}
                                         placeholder="Section content (supports basic markdown)..."
                                         rows="1"
-                                        style={{ flex: 1, padding: '0.8rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '8px', color: '#ccc', fontFamily: 'inherit', lineHeight: '1.6', resize: 'none', overflow: 'hidden', minHeight: '150px' }}
                                     />
                                 </div>
 
                                 {/* Extra Media: Image & Code */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', paddingTop: '1rem', borderTop: '1px dashed #222' }}>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-dashed border-[#222]">
                                     {/* Image */}
                                     <div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#666', fontSize: '0.9rem' }}>
+                                        <div className="flex items-center gap-2 mb-2 text-[#666] text-sm">
                                             <FaImage /> Image URL
                                         </div>
                                         <input
                                             value={getStringVal(section.image)}
                                             onChange={(e) => handleSectionChange(index, 'image', [e.target.value])}
                                             placeholder="https://..."
-                                            style={{ width: '100%', padding: '0.6rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '6px', color: '#fff' }}
+                                            className="w-full p-2.5 bg-[#050505] border border-[#333] rounded-md text-white focus:border-[#666] focus:outline-none transition-colors"
                                         />
                                         {getStringVal(section.image) && (
-                                            <img src={getStringVal(section.image)} style={{ marginTop: '0.5rem', maxHeight: '100px', borderRadius: '4px', border: '1px solid #333' }} />
+                                            <img src={getStringVal(section.image)} className="mt-2 max-h-[100px] rounded border border-[#333]" alt="Section" />
                                         )}
                                     </div>
 
                                     {/* Code */}
                                     <div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#666', fontSize: '0.9rem' }}>
+                                        <div className="flex items-center gap-2 mb-2 text-[#666] text-sm">
                                             <FaCode /> Code Snippet
                                         </div>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                        <div className="flex flex-col gap-2">
                                             <input
                                                 value={getStringVal(section.code_language)}
                                                 onChange={(e) => handleSectionChange(index, 'code_language', [e.target.value])}
                                                 placeholder="Language (e.g. javascript)"
-                                                style={{ width: '100%', padding: '0.4rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '6px', color: '#888', fontSize: '0.85rem' }}
+                                                className="w-full p-2 bg-[#050505] border border-[#333] rounded-md text-[#888] text-sm focus:border-[#666] focus:outline-none transition-colors"
                                             />
                                             <textarea
-                                                className="auto-resize"
+                                                className="auto-resize w-full p-2.5 bg-[#050505] border border-[#333] rounded-md text-[#d4d4d4] font-mono text-sm resize-none overflow-hidden min-h-[80px] focus:border-[#666] focus:outline-none transition-colors"
                                                 value={getStringVal(section.code)}
                                                 onChange={(e) => {
                                                     handleSectionChange(index, 'code', [e.target.value]);
@@ -386,7 +373,6 @@ const BlogEditor = () => {
                                                 }}
                                                 placeholder="Paste code here..."
                                                 rows="1"
-                                                style={{ width: '100%', padding: '0.6rem', backgroundColor: '#050505', border: '1px solid #333', borderRadius: '6px', color: '#d4d4d4', fontFamily: 'monospace', fontSize: '0.85rem', resize: 'none', overflow: 'hidden', minHeight: '80px' }}
                                             />
                                         </div>
                                     </div>
@@ -397,23 +383,7 @@ const BlogEditor = () => {
 
                     <button
                         onClick={addSection}
-                        style={{
-                            padding: '2rem',
-                            border: '2px dashed #333',
-                            borderRadius: '16px',
-                            background: 'transparent',
-                            color: '#666',
-                            fontSize: '1.1rem',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '1rem',
-                            transition: 'all 0.2s'
-                        }}
-                        onMouseOver={e => { e.currentTarget.style.borderColor = '#666'; e.currentTarget.style.color = '#fff' }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = '#333'; e.currentTarget.style.color = '#666' }}
+                        className="w-full py-8 border-2 border-dashed border-[#333] rounded-2xl bg-transparent text-[#666] text-lg font-semibold cursor-pointer flex items-center justify-center gap-3 transition-colors hover:border-[#666] hover:text-white"
                     >
                         <FaPlus /> Add New Section
                     </button>
