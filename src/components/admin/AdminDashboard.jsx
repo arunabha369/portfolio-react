@@ -133,7 +133,7 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-3 w-full md:w-auto justify-end border-t border-[#222] pt-4 md:border-0 md:pt-0">
+                            <div className="flex gap-3 w-full md:w-auto justify-between md:justify-end border-t border-[#222] pt-4 md:border-0 md:pt-0">
                                 <button
                                     onClick={() => togglePublish(blog.id, blog.is_published)}
                                     title={blog.is_published ? "Unpublish" : "Publish"}
