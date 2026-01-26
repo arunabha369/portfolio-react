@@ -120,7 +120,13 @@ const BlogEditor = () => {
         }
     };
 
-
+    // Effect to resize textareas when sections change (e.g. initial load or add/move)
+    useEffect(() => {
+        const textareas = document.querySelectorAll('textarea.auto-resize');
+        textareas.forEach(textarea => {
+            adjustTextareaHeight(textarea);
+        });
+    }, [sections]);
 
 
     const handleSave = async () => {
@@ -302,7 +308,7 @@ const BlogEditor = () => {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                     {sections.map((section, index) => (
-                        <div key={section.id} style={{ backgroundColor: '#111', borderRadius: '16px', border: '1px solid #333', overflow: 'hidden' }}>
+                        <div key={index} style={{ backgroundColor: '#111', borderRadius: '16px', border: '1px solid #333', overflow: 'hidden' }}>
                             {/* Section Toolbar */}
                             <div style={{ backgroundColor: '#1a1a1a', padding: '0.8rem 1.5rem', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <span style={{ fontWeight: '600', color: '#666' }}>Section {index + 1}</span>
