@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SendIcon from '../svgs/SendIcon';
+import TypingMessage from './TypingMessage';
 const initialMessages = [{
   id: 1,
   text: "Hello! I'm Arunabha's Portfolio Assistant. How can I help you?",
@@ -120,6 +121,11 @@ const ChatBubble = () => {
     // Send the message (reuse the same logic as handleSendMessage)
     sendMessage(suggestion, botMessageId);
   };
+
+  const handleTypingComplete = (id) => {
+    setMessages(prev => prev.map(msg => msg.id === id ? { ...msg, isTyping: false } : msg));
+  };
+
   const sendMessage = async (messageText, botMessageId) => {
     try {
       const response = await fetch('https://portfolio-chatbot-3pee.onrender.com/chatbot', {
@@ -142,7 +148,9 @@ const ChatBubble = () => {
         setMessages(prev => prev.map(msg => msg.id === botMessageId ? {
           ...msg,
           text: data.answer,
-          isStreaming: false
+          text: data.answer,
+          isStreaming: false,
+          isTyping: true
         } : msg));
       } else {
         throw new Error('No answer received from bot');
@@ -193,7 +201,12 @@ const ChatBubble = () => {
               <div className="max-w-xs flex-1 md:max-w-sm">
                 <div className="flex items-center gap-2">
                   <div className="prose prose-sm dark:prose-invert max-w-none flex-1">
-                    {message.text ? <ReactMarkdown components={{
+                    {message.isTyping ? (
+                      <TypingMessage
+                        text={message.text}
+                        onComplete={() => handleTypingComplete(message.id)}
+                      />
+                    ) : message.text ? <ReactMarkdown components={{
                       a: props => <a {...props} target="_blank" rel="noopener noreferrer" className="break-words text-blue-500 underline hover:text-blue-700" />,
                       // Custom paragraph component to remove default margins
                       p: props => <p {...props} className="m-0 leading-relaxed" />,
@@ -234,7 +247,7 @@ const ChatBubble = () => {
 
     <ExpandableChatFooter>
       <div className="flex space-x-2">
-        <Input placeholder="Ask me about my work and experience..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyPress={handleKeyPress} disabled={isLoading} className="flex-1" />
+        <Input placeholder="Ask me anything..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyPress={handleKeyPress} disabled={isLoading} className="flex-1" />
         <Button size="sm" onClick={handleSendMessage} disabled={!newMessage.trim() || isLoading}>
           {isLoading ? <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" /> : <SendIcon className="h-4 w-4" />}
         </Button>
