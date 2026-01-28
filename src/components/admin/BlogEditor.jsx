@@ -96,7 +96,9 @@ const BlogEditor = () => {
     };
 
     const removeSection = (index) => {
-        setSections(sections.filter((_, i) => i !== index));
+        if (window.confirm("Are you sure you want to delete this section?")) {
+            setSections(sections.filter((_, i) => i !== index));
+        }
     };
 
     const moveSection = (index, direction) => {
