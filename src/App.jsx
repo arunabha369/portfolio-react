@@ -18,6 +18,7 @@ import NotFound from '@/pages/NotFound';
 import Books from '@/pages/Books';
 import Movies from '@/pages/Movies';
 import Youtubers from '@/pages/Youtubers';
+import SocialPresence from '@/pages/SocialPresence';
 
 // Admin Imports
 import AdminRoute from '@/components/admin/AdminRoute';
@@ -69,6 +70,7 @@ function App() {
                     <Route path="/books" element={<Books />} />
                     <Route path="/movies" element={<Movies />} />
                     <Route path="/youtubers" element={<Youtubers />} />
+                    <Route path="/social-presence" element={<SocialPresence />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </RootLayout>
