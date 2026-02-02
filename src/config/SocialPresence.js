@@ -8,10 +8,10 @@ export const instagramLinks = [
         type: 'instagram'
     },
     {
-        name: 'Arunabha Dev',
-        description: 'Coding, projects, and developer lifestyle.',
+        name: 'arunabha.dev',
+        description: 'Personal lifestyle and daily updates.',
         href: 'https://www.instagram.com/arunabha.dev/',
-        tags: ['Coding', 'Developer'],
+        tags: ['Personal', 'Lifestyle'],
         type: 'instagram'
     },
     {
@@ -48,6 +48,13 @@ export const instagramLinks = [
         href: 'https://www.instagram.com/broken.soul.369/',
         tags: ['Poetry', 'Thoughts'],
         type: 'instagram'
+    },
+    {
+        name: 'Arunabha Banerjee',
+        description: 'Connect with me on Facebook.',
+        href: 'https://www.facebook.com/arunabha.banerjee.520',
+        tags: ['Social', 'Personal'],
+        type: 'facebook'
     }
 ];
 

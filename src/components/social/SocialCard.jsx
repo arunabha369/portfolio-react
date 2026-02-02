@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from '@/components/ui/Link';
-import { Instagram, Youtube, Linkedin, Github, Twitter, Terminal, Code, Brain } from 'lucide-react';
+import { Instagram, Youtube, Linkedin, Github, Twitter, Terminal, Code, Brain, Facebook } from 'lucide-react';
 
 const SocialCard = ({ social }) => {
     const isYoutube = social.type === 'youtube';
@@ -12,6 +12,7 @@ const SocialCard = ({ social }) => {
     const isLeetcode = social.type === 'leetcode';
     const isGFG = social.type === 'geeksforgeeks';
     const isTUF = social.type === 'takeuforward';
+    const isFacebook = social.type === 'facebook';
 
     // Styles based on platform
     let hoverBorderColor = 'group-hover:border-pink-300 dark:group-hover:border-pink-700'; // Default Instagram
@@ -50,6 +51,10 @@ const SocialCard = ({ social }) => {
         hoverBorderColor = 'group-hover:border-red-600/50 dark:group-hover:border-red-500/50';
         hoverTextColor = 'group-hover:text-red-700';
         bgGradient = 'from-red-600 via-red-700 to-black';
+    } else if (isFacebook) {
+        hoverBorderColor = 'group-hover:border-blue-600/50 dark:group-hover:border-blue-500/50';
+        hoverTextColor = 'group-hover:text-blue-700';
+        bgGradient = 'from-blue-600 via-blue-700 to-blue-900';
     }
 
     const renderIcon = () => {
@@ -61,6 +66,7 @@ const SocialCard = ({ social }) => {
         if (isLeetcode) return <Code className="size-8 text-white drop-shadow-md" />;
         if (isGFG) return <Terminal className="size-8 text-white drop-shadow-md" />;
         if (isTUF) return <Brain className="size-8 text-white drop-shadow-md" />;
+        if (isFacebook) return <Facebook className="size-8 text-white drop-shadow-md" />;
         return <Instagram className="size-8 text-white drop-shadow-md" />;
     };
 
