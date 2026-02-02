@@ -1,28 +1,66 @@
 
 import React from 'react';
 import Link from '@/components/ui/Link';
-import { Instagram, Youtube } from 'lucide-react';
+import { Instagram, Youtube, Linkedin, Github, Twitter, Terminal, Code, Brain } from 'lucide-react';
 
 const SocialCard = ({ social }) => {
     const isYoutube = social.type === 'youtube';
+    const isTwitter = social.type === 'x';
+    const isLinkedin = social.type === 'linkedin';
+    const isGithub = social.type === 'github';
+    const isCodolio = social.type === 'codolio';
+    const isLeetcode = social.type === 'leetcode';
+    const isGFG = social.type === 'geeksforgeeks';
+    const isTUF = social.type === 'takeuforward';
 
     // Styles based on platform
-    const hoverBorderColor = isYoutube
-        ? 'group-hover:border-red-500/50 dark:group-hover:border-red-500/50'
-        : 'group-hover:border-pink-300 dark:group-hover:border-pink-700';
+    let hoverBorderColor = 'group-hover:border-pink-300 dark:group-hover:border-pink-700'; // Default Instagram
+    let hoverTextColor = 'group-hover:text-pink-600'; // Default Instagram
+    let bgGradient = 'from-yellow-200 via-orange-300 to-pink-400 dark:from-yellow-900 dark:via-orange-800 dark:to-pink-900'; // Default Instagram
 
-    const hoverTextColor = isYoutube
-        ? 'group-hover:text-red-600'
-        : 'group-hover:text-pink-600';
-
-    const bgGradient = isYoutube
-        ? 'from-red-500 via-red-600 to-red-700'
-        : 'from-yellow-200 via-orange-300 to-pink-400 dark:from-yellow-900 dark:via-orange-800 dark:to-pink-900';
+    if (isYoutube) {
+        hoverBorderColor = 'group-hover:border-red-500/50 dark:group-hover:border-red-500/50';
+        hoverTextColor = 'group-hover:text-red-600';
+        bgGradient = 'from-red-500 via-red-600 to-red-700';
+    } else if (isTwitter) {
+        hoverBorderColor = 'group-hover:border-zinc-800 dark:group-hover:border-zinc-200';
+        hoverTextColor = 'group-hover:text-black dark:group-hover:text-white';
+        bgGradient = 'from-gray-700 via-gray-900 to-black';
+    } else if (isLinkedin) {
+        hoverBorderColor = 'group-hover:border-blue-500/50 dark:group-hover:border-blue-400/50';
+        hoverTextColor = 'group-hover:text-blue-600';
+        bgGradient = 'from-blue-400 via-blue-600 to-blue-800';
+    } else if (isGithub) {
+        hoverBorderColor = 'group-hover:border-gray-500/50 dark:group-hover:border-gray-400/50';
+        hoverTextColor = 'group-hover:text-gray-900 dark:group-hover:text-gray-100';
+        bgGradient = 'from-gray-600 via-gray-800 to-gray-900';
+    } else if (isCodolio) {
+        hoverBorderColor = 'group-hover:border-purple-500/50 dark:group-hover:border-purple-400/50';
+        hoverTextColor = 'group-hover:text-purple-600';
+        bgGradient = 'from-indigo-500 via-purple-500 to-pink-500';
+    } else if (isLeetcode) {
+        hoverBorderColor = 'group-hover:border-yellow-500/50 dark:group-hover:border-yellow-400/50';
+        hoverTextColor = 'group-hover:text-yellow-600';
+        bgGradient = 'from-yellow-400 via-orange-500 to-orange-600';
+    } else if (isGFG) {
+        hoverBorderColor = 'group-hover:border-green-500/50 dark:group-hover:border-green-400/50';
+        hoverTextColor = 'group-hover:text-green-600';
+        bgGradient = 'from-green-400 via-green-600 to-green-800';
+    } else if (isTUF) {
+        hoverBorderColor = 'group-hover:border-red-600/50 dark:group-hover:border-red-500/50';
+        hoverTextColor = 'group-hover:text-red-700';
+        bgGradient = 'from-red-600 via-red-700 to-black';
+    }
 
     const renderIcon = () => {
-        if (isYoutube) {
-            return <Youtube className="size-8 text-white drop-shadow-md" />;
-        }
+        if (isYoutube) return <Youtube className="size-8 text-white drop-shadow-md" />;
+        if (isTwitter) return <Twitter className="size-8 text-white drop-shadow-md" />; // Lucide usually has Twitter
+        if (isLinkedin) return <Linkedin className="size-8 text-white drop-shadow-md" />;
+        if (isGithub) return <Github className="size-8 text-white drop-shadow-md" />;
+        if (isCodolio) return <Terminal className="size-8 text-white drop-shadow-md" />;
+        if (isLeetcode) return <Code className="size-8 text-white drop-shadow-md" />;
+        if (isGFG) return <Terminal className="size-8 text-white drop-shadow-md" />;
+        if (isTUF) return <Brain className="size-8 text-white drop-shadow-md" />;
         return <Instagram className="size-8 text-white drop-shadow-md" />;
     };
 

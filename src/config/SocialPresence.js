@@ -74,3 +74,62 @@ export const youtubeLinks = [
         type: 'youtube'
     }
 ];
+
+export const developerLinks = [
+    {
+        name: 'X (Twitter)',
+        description: 'Tech thoughts, updates, and community.',
+        href: 'https://x.com/arunabha369',
+        tags: ['Tech', 'Community'],
+        type: 'x'
+    },
+    {
+        name: 'X (Alt)',
+        description: 'Alternative account.',
+        href: 'https://x.com/arunabha_369',
+        tags: ['Personal', 'Random'],
+        type: 'x'
+    },
+    {
+        name: 'LinkedIn',
+        description: 'Professional network and career updates.',
+        href: 'https://www.linkedin.com/in/arunabha369/',
+        tags: ['Professional', 'Career'],
+        type: 'linkedin'
+    },
+    {
+        name: 'GitHub',
+        description: 'Open source projects and code repositories.',
+        href: 'https://github.com/arunabha369',
+        tags: ['Code', 'Open Source'],
+        type: 'github'
+    },
+    {
+        name: 'Codolio',
+        description: 'Coding profile and achievements.',
+        href: 'https://codolio.com/profile/arunabha369',
+        tags: ['Portfolio', 'Achievements'],
+        type: 'codolio'
+    },
+    {
+        name: 'LeetCode',
+        description: 'Problem solving and algorithm practice.',
+        href: 'https://leetcode.com/u/arunabha_369/',
+        tags: ['DSA', 'Algorithms'],
+        type: 'leetcode'
+    },
+    {
+        name: 'GeeksforGeeks',
+        description: 'Computer science articles and coding practice.',
+        href: 'https://www.geeksforgeeks.org/profile/arunabha369',
+        tags: ['CS Fundamentals', 'DSA'],
+        type: 'geeksforgeeks'
+    },
+    {
+        name: 'takeUforward',
+        description: 'DSA roadmap and structured learning.',
+        href: 'https://takeuforward.org/profile/arunabha_369',
+        tags: ['DSA', 'Roadmap'],
+        type: 'takeuforward'
+    }
+];
