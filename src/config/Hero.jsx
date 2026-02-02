@@ -105,7 +105,7 @@ export const heroConfig = {
 // Social Links Configuration
 export const socialLinks = [{
   name: 'X',
-  href: 'https://x.com/arunabha_369',
+  href: 'https://x.com/arunabha369',
   icon: <X />
 }, {
   name: 'LinkedIn',
