@@ -14,11 +14,13 @@ const ActivityCalendar = dynamic(() => import('react-activity-calendar'), {
 // Helper function to filter contributions to start from April
 function filterLastYear(contributions) {
   const now = new Date();
-  const startDate = new Date(now.getFullYear() - 1, 3, 1); // April 1st of previous year
+  const currentYear = now.getFullYear();
+  const startDate = new Date(currentYear - 1, 7, 1); // August 1st of previous year
+  const endDate = new Date(currentYear, 3, 30); // April 30th of current year
 
   return contributions.filter(item => {
     const itemDate = new Date(item.date);
-    return itemDate >= startDate && itemDate <= now;
+    return itemDate >= startDate && itemDate <= endDate;
   });
 }
 export default function Github() {
