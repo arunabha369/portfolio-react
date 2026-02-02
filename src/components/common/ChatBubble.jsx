@@ -148,7 +148,7 @@ const ChatBubble = () => {
         setMessages(prev => prev.map(msg => msg.id === botMessageId ? {
           ...msg,
           text: data.answer,
-          text: data.answer,
+
           isStreaming: false,
           isTyping: true
         } : msg));

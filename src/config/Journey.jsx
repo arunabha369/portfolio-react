@@ -1,4 +1,4 @@
-import { Book, FilmStrip, Laptop, Monitor, YoutubeLogo, InstagramLogo } from '@phosphor-icons/react/dist/ssr';
+import { Book, FilmStrip, Laptop, Monitor, YoutubeLogo, ShareNetwork } from '@phosphor-icons/react/dist/ssr';
 
 export const developmentItems = [{
   name: 'Gears Used',
@@ -29,7 +29,7 @@ export const personalItems = [{
   href: '/youtubers'
 }, {
   name: 'Social Presence',
-  description: 'Connect with me across my different Instagram pages.',
-  icon: InstagramLogo,
+  description: 'Connect with me across my different social islands.',
+  icon: ShareNetwork,
   href: '/social-presence'
 }];

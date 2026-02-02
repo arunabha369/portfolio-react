@@ -32,7 +32,7 @@ export default function SocialPresence() {
                             <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-primary dark:border-white/10">
                                 <Code className="size-4" />
                             </div>
-                            <h2 className="text-2xl font-semibold">Developer</h2>
+                            <h2 className="text-2xl font-semibold">Professional & Coding Profiles</h2>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
