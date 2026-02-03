@@ -36,9 +36,9 @@ export const instagramLinks = [
         type: 'instagram'
     },
     {
-        name: 'Shutter Stories 369',
+        name: 'Arunabha Lens',
         description: 'Photography and visual storytelling.',
-        href: 'https://www.instagram.com/shutter_stories369/',
+        href: 'https://www.instagram.com/arunabha.lens/',
         tags: ['Photography', 'Visuals'],
         type: 'instagram'
     },
