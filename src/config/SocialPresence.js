@@ -128,21 +128,24 @@ export const developerLinks = [
         description: 'Coding profile and achievements.',
         href: 'https://codolio.com/profile/arunabha369',
         tags: ['Portfolio', 'Achievements'],
-        type: 'codolio'
+        type: 'codolio',
+        image: '/codolio.png'
     },
     {
         name: 'LeetCode',
         description: 'Problem solving and algorithm practice.',
         href: 'https://leetcode.com/u/arunabha_369/',
         tags: ['DSA', 'Algorithms'],
-        type: 'leetcode'
+        type: 'leetcode',
+        image: '/leetcode.png'
     },
     {
         name: 'GeeksforGeeks',
         description: 'Computer science articles and coding practice.',
         href: 'https://www.geeksforgeeks.org/profile/arunabha369',
         tags: ['CS Fundamentals', 'DSA'],
-        type: 'geeksforgeeks'
+        type: 'geeksforgeeks',
+        image: '/gfg.png'
     },
     {
         name: 'takeUforward',
