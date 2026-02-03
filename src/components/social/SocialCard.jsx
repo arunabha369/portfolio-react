@@ -78,11 +78,19 @@ const SocialCard = ({ social }) => {
         >
             <div className={`relative aspect-square w-full overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:shadow-md ${hoverBorderColor}`}>
                 {/* Fallback pattern or Initial */}
-                <div className={`h-full w-full flex items-center justify-center bg-gradient-to-br ${bgGradient}`}>
-                    <span className="text-4xl font-bold text-white opacity-80 mix-blend-overlay">
-                        {social.name.charAt(0)}
-                    </span>
-                </div>
+                {social.image ? (
+                    <img
+                        src={social.image}
+                        alt={social.name}
+                        className="h-full w-full object-cover"
+                    />
+                ) : (
+                    <div className={`h-full w-full flex items-center justify-center bg-gradient-to-br ${bgGradient}`}>
+                        <span className="text-4xl font-bold text-white opacity-80 mix-blend-overlay">
+                            {social.name.charAt(0)}
+                        </span>
+                    </div>
+                )}
 
                 {/* Overlay Icon */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[2px] rounded-full">

@@ -5,7 +5,8 @@ export const instagramLinks = [
         description: 'My personal Instagram profile.',
         href: 'https://www.instagram.com/arunabha_369/',
         tags: ['Personal', 'Lifestyle'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/profile.jpg'
     },
     {
         name: 'arunabha.dev',
@@ -26,7 +27,8 @@ export const instagramLinks = [
         description: 'Motivation, hustle, and growth mindset.',
         href: 'https://www.instagram.com/growwithhustler/',
         tags: ['Motivation', 'Growth'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/hustler.png'
     },
     {
         name: 'The Bong Mindset',
@@ -54,7 +56,8 @@ export const instagramLinks = [
         description: 'Connect with me on Facebook.',
         href: 'https://www.facebook.com/arunabha.banerjee.520',
         tags: ['Social', 'Personal'],
-        type: 'facebook'
+        type: 'facebook',
+        image: '/profile.jpg'
     }
 ];
 
@@ -64,14 +67,16 @@ export const youtubeLinks = [
         description: 'Personal vlogs and life updates.',
         href: 'https://www.youtube.com/@arunabha369',
         tags: ['Vlogs', 'Life'],
-        type: 'youtube'
+        type: 'youtube',
+        image: '/profile.jpg'
     },
     {
         name: 'Grow With Hustler',
         description: 'Self-improvement and hustle motivation.',
         href: 'https://www.youtube.com/@Grow.with.hustler',
         tags: ['Motivation', 'Growth'],
-        type: 'youtube'
+        type: 'youtube',
+        image: '/hustler.png'
     },
     {
         name: 'The Bong Mindset',
