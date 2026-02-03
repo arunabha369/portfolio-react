@@ -13,7 +13,8 @@ export const instagramLinks = [
         description: 'Personal lifestyle and daily updates.',
         href: 'https://www.instagram.com/arunabha.dev/',
         tags: ['Personal', 'Lifestyle'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/arunabha_dev.jpg'
     },
     {
         name: 'Four Engineers',
@@ -44,14 +45,16 @@ export const instagramLinks = [
         description: 'Photography and visual storytelling.',
         href: 'https://www.instagram.com/arunabha.lens/',
         tags: ['Photography', 'Visuals'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/arunabha_lens.jpg'
     },
     {
         name: 'Broken Soul 369',
         description: 'Poetry, thoughts, and reflections.',
         href: 'https://www.instagram.com/broken.soul.369/',
         tags: ['Poetry', 'Thoughts'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/broken_soul.jpg'
     },
     {
         name: 'Arunabha Banerjee',
