@@ -20,7 +20,8 @@ export const instagramLinks = [
         description: 'Engineering memes, life, and community.',
         href: 'https://www.instagram.com/four.engineers/',
         tags: ['Engineering', 'Community'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/four_engineers.jpg'
     },
     {
         name: 'Grow With Hustler',
@@ -35,7 +36,8 @@ export const instagramLinks = [
         description: 'Cultural vibes and mindset.',
         href: 'https://www.instagram.com/thebongmindset/',
         tags: ['Culture', 'Mindset'],
-        type: 'instagram'
+        type: 'instagram',
+        image: '/bong_mindset.jpg'
     },
     {
         name: 'Arunabha Lens',
@@ -83,7 +85,8 @@ export const youtubeLinks = [
         description: 'Exploring culture and perspectives.',
         href: 'https://www.youtube.com/@TheBongMindset',
         tags: ['Culture', 'Talks'],
-        type: 'youtube'
+        type: 'youtube',
+        image: '/bong_mindset.jpg'
     }
 ];
 
@@ -93,28 +96,32 @@ export const developerLinks = [
         description: 'Tech thoughts, updates, and community.',
         href: 'https://x.com/arunabha369',
         tags: ['Tech', 'Community'],
-        type: 'x'
+        type: 'x',
+        image: '/x_logo.png'
     },
     {
         name: 'X (Alt)',
         description: 'Alternative account.',
         href: 'https://x.com/arunabha_369',
         tags: ['Personal', 'Random'],
-        type: 'x'
+        type: 'x',
+        image: '/x_logo.png'
     },
     {
         name: 'LinkedIn',
         description: 'Professional network and career updates.',
         href: 'https://www.linkedin.com/in/arunabha369/',
         tags: ['Professional', 'Career'],
-        type: 'linkedin'
+        type: 'linkedin',
+        image: '/linkedin.png'
     },
     {
         name: 'GitHub',
         description: 'Open source projects and code repositories.',
         href: 'https://github.com/arunabha369',
         tags: ['Code', 'Open Source'],
-        type: 'github'
+        type: 'github',
+        image: '/github.png'
     },
     {
         name: 'Codolio',
@@ -142,6 +149,7 @@ export const developerLinks = [
         description: 'DSA roadmap and structured learning.',
         href: 'https://takeuforward.org/profile/arunabha_369',
         tags: ['DSA', 'Roadmap'],
-        type: 'takeuforward'
+        type: 'takeuforward',
+        image: '/tuf_logo.png'
     }
 ];
