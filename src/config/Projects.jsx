@@ -125,5 +125,42 @@ export const projects = [
         details: true,
         projectDetailsPageSlug: '/projects/portfolio-chatbot',
         isWorking: true
+    },
+    {
+        title: "Portfolio Website",
+        description: "A modern, high-performance portfolio website designed to showcase my journey as a Full Stack Developer. Built with a focus on speed, aesthetics, and user experience.",
+        image: '/project/portfolio-website.png',
+        link: 'https://arunabha.dev',
+        github: 'https://github.com/arunabha369/portfolio-react',
+        live: 'https://arunabha.dev',
+        technologies: [
+            { name: 'React', icon: <ReactIcon key="react" /> },
+            { name: 'Tailwind CSS', icon: <TailwindCss key="tailwind" /> },
+            { name: 'shadcn/ui', icon: <Shadcn key="shadcn" /> },
+            { name: 'Node.js', icon: <NodeJs key="nodejs" /> },
+            { name: 'Express', icon: <ExpressJs key="express" /> },
+            { name: 'Motion', icon: <Motion key="motion" /> }
+        ],
+        details: true,
+        projectDetailsPageSlug: '/projects/portfolio-website',
+        isWorking: true
+    },
+    {
+        title: "Aahar Sathi",
+        description: "AI-Powered Nutrition & Budget Meal Companion (India-First). Aahar Sathi is an AI-driven nutrition tracking and food recommendation platform designed specifically for Indian users.",
+        image: '/project/aahar-sathi.png',
+        link: 'https://aaharsathi.in/',
+        github: 'https://github.com/arunabha369/aahar-sathi',
+        live: 'https://aaharsathi.in/',
+        technologies: [
+            { name: 'Next.js', icon: <NextJs key="nextjs" /> },
+            { name: 'Tailwind CSS', icon: <TailwindCss key="tailwind" /> },
+            { name: 'Node.js', icon: <NodeJs key="nodejs" /> },
+            { name: 'Express', icon: <ExpressJs key="express" /> },
+            { name: 'MongoDB', icon: <MongoDB key="mongodb" /> }
+        ],
+        details: true,
+        projectDetailsPageSlug: '/projects/aahar-sathi',
+        isWorking: false
     }
 ];
