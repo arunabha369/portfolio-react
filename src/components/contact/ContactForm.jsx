@@ -46,11 +46,10 @@ export default function ContactForm() {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("https://formspree.io/f/mbdddrpq", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
-          'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
       });

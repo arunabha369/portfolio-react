@@ -118,6 +118,7 @@ ${data.message.trim()}
 }
 
 app.post('/api/contact', async (req, res) => {
+  console.log('📩 Received contact form submission:', req.body);
   try {
     const clientIP = getClientIP(req);
     const rateLimit = checkRateLimit(clientIP);

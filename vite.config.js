@@ -31,8 +31,12 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
+      '/api/chat': {
         target: 'https://portfolio-chatbot-3pee.onrender.com',
+        changeOrigin: true,
+      },
+      '/api/contact': {
+        target: 'http://localhost:3001',
         changeOrigin: true,
       },
     },
