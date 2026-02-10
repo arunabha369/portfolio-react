@@ -1,81 +1,84 @@
-
-import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
-import { Minus, Plus, Settings } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Button } from '../ui/button';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '../ui/drawer';
+import { Minus, Plus, Settings } from 'lucide-react';
+import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
+import { Button } from '@/components/ui/button';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import { useIsMobile } from '@/hooks/use-mobile';
+
+
 export default function FontSizeControls() {
   const [fontSize, setFontSize] = useState(16);
-  const {
-    triggerHaptic,
-    isMobile
-  } = useHapticFeedback();
+  const { triggerHaptic } = useHapticFeedback();
+  const isMobile = useIsMobile();
 
   // Load font size from localStorage on mount
   useEffect(() => {
-    /*
-    if (typeof window !== 'undefined') {
-      try {
-        const savedFontSize = localStorage.getItem('blog-font-size');
-        if (savedFontSize) {
-          const size = parseInt(savedFontSize, 10);
-          setFontSize(size);
-          applyFontSize(size);
-        }
-      } catch (e) {
-        console.error('Error accessing localStorage:', e);
-      }
+    const savedFontSize = localStorage.getItem('blog-font-size');
+    if (savedFontSize) {
+      const size = parseInt(savedFontSize, 10);
+      setFontSize(size);
+      applyFontSize(size);
     }
-    */
   }, []);
 
   // Apply font size to the document
-  const applyFontSize = size => {
+  const applyFontSize = (size) => {
     if (typeof window !== 'undefined') {
-      document.documentElement.style.setProperty('--blog-font-size', `${size}px`);
+      document.documentElement.style.setProperty(
+        '--blog-font-size',
+        `${size}px`,
+      );
     }
   };
 
   // Save to localStorage and apply
-  const updateFontSize = newSize => {
+  const updateFontSize = (newSize) => {
     const clampedSize = Math.max(12, Math.min(24, newSize));
     setFontSize(clampedSize);
     applyFontSize(clampedSize);
-    /*
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('blog-font-size', clampedSize.toString());
-      } catch (e) {
-        console.error('Error setting localStorage:', e);
-      }
-    }
-    */
+    localStorage.setItem('blog-font-size', clampedSize.toString());
   };
+
   const handleIncrease = () => {
-    if (isMobile()) {
+    if (isMobile) {
       triggerHaptic('light');
     }
     updateFontSize(fontSize + 2);
   };
+
   const handleDecrease = () => {
-    if (isMobile()) {
+    if (isMobile) {
       triggerHaptic('light');
     }
     updateFontSize(fontSize - 2);
   };
+
   const handleReset = () => {
-    if (isMobile()) {
+    if (isMobile) {
       triggerHaptic('medium');
     }
     updateFontSize(16);
   };
-  return <>
+
+  return (
+    <>
       {/* Mobile: Drawer interface */}
       <div className="md:hidden">
         <Drawer>
           {/* Trigger button - bottom left */}
           <DrawerTrigger asChild>
-            <Button variant="outline" size="sm" className="bg-background/95 border-border hover:bg-accent fixed bottom-4 left-4 z-50 h-12 w-12 rounded-full border shadow-lg backdrop-blur-sm" aria-label="Open font size controls">
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-background/95 border-border hover:bg-accent fixed bottom-4 left-4 z-50 h-12 w-12 rounded-full border shadow-lg backdrop-blur-sm"
+              aria-label="Open font size controls"
+            >
               <Settings size={20} />
             </Button>
           </DrawerTrigger>
@@ -100,15 +103,35 @@ export default function FontSizeControls() {
 
                 {/* Controls */}
                 <div className="flex items-center gap-4">
-                  <Button variant="outline" size="lg" onClick={handleDecrease} disabled={fontSize <= 12} className="h-12 w-12 p-0" aria-label="Decrease font size">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={handleDecrease}
+                    disabled={fontSize <= 12}
+                    className="h-12 w-12 p-0"
+                    aria-label="Decrease font size"
+                  >
                     <Minus size={20} />
                   </Button>
 
-                  <Button variant="outline" size="lg" onClick={handleReset} className="hover:bg-accent h-12 px-4 font-mono text-sm whitespace-nowrap" aria-label="Reset font size">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={handleReset}
+                    className="hover:bg-accent h-12 px-4 font-mono text-sm whitespace-nowrap"
+                    aria-label="Reset font size"
+                  >
                     Reset
                   </Button>
 
-                  <Button variant="outline" size="lg" onClick={handleIncrease} disabled={fontSize >= 24} className="h-12 w-12 p-0" aria-label="Increase font size">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={handleIncrease}
+                    disabled={fontSize >= 24}
+                    className="h-12 w-12 p-0"
+                    aria-label="Increase font size"
+                  >
                     <Plus size={20} />
                   </Button>
                 </div>
@@ -120,9 +143,12 @@ export default function FontSizeControls() {
                     <span>24px</span>
                   </div>
                   <div className="bg-muted h-2 w-full rounded-full">
-                    <div className="bg-primary h-2 rounded-full transition-all duration-300" style={{
-                    width: `${(fontSize - 12) / (24 - 12) * 100}%`
-                  }} />
+                    <div
+                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${((fontSize - 12) / (24 - 12)) * 100}%`,
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -136,20 +162,41 @@ export default function FontSizeControls() {
         <div className="bg-background/95 border-border rounded-lg border p-2 shadow-lg backdrop-blur-sm">
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-col items-center gap-2">
-              <Button variant="outline" size="sm" onClick={handleIncrease} disabled={fontSize >= 24} className="h-8 w-8 p-0" aria-label="Increase font size">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleIncrease}
+                disabled={fontSize >= 24}
+                className="h-8 w-8 p-0"
+                aria-label="Increase font size"
+              >
                 <Plus size={14} />
               </Button>
 
-              <Button variant="ghost" size="sm" onClick={handleReset} className="hover:bg-accent h-10 px-1 font-mono text-xs whitespace-nowrap" aria-label="Reset font size">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleReset}
+                className="hover:bg-accent h-10 px-1 font-mono text-xs whitespace-nowrap"
+                aria-label="Reset font size"
+              >
                 {fontSize}px
               </Button>
 
-              <Button variant="outline" size="sm" onClick={handleDecrease} disabled={fontSize <= 12} className="h-8 w-8 p-0" aria-label="Decrease font size">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDecrease}
+                disabled={fontSize <= 12}
+                className="h-8 w-8 p-0"
+                aria-label="Decrease font size"
+              >
                 <Minus size={14} />
               </Button>
             </div>
           </div>
         </div>
       </div>
-    </>;
+    </>
+  );
 }

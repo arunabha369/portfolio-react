@@ -17,6 +17,7 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import Image from '@/components/ui/Image';
+import FontSizeControls from '@/components/common/FontSizeControls';
 
 // Helper to extract text content from React nodes for the copy button
 const getTextContent = (node) => {
@@ -220,155 +221,158 @@ const BlogDetail = () => {
     });
 
     return (
-        <Container className="py-16">
-            <Helmet>
-                <title>{blog ? `${blog.title} | Arunabha Banerjee` : 'Loading...'}</title>
-            </Helmet>
-            <article className="mx-auto max-w-4xl space-y-12">
-                {/* Back Button */}
-                <div>
-                    <Button variant="ghost" asChild className="group">
-                        <Link to="/blog" className="flex items-center space-x-2">
-                            <ArrowLeft className="size-4" />
-                            <span>Back to Blogs</span>
-                        </Link>
-                    </Button>
-                </div>
+        <>
+            <Container className="py-16">
+                <Helmet>
+                    <title>{blog ? `${blog.title} | Arunabha Banerjee` : 'Loading...'}</title>
+                </Helmet>
+                <article className="mx-auto max-w-4xl space-y-12">
+                    {/* Back Button */}
+                    <div>
+                        <Button variant="ghost" asChild className="group">
+                            <Link to="/blog" className="flex items-center space-x-2">
+                                <ArrowLeft className="size-4" />
+                                <span>Back to Blogs</span>
+                            </Link>
+                        </Button>
+                    </div>
 
-                {/* Header */}
-                <header className="space-y-6">
-                    {/* Hero Image */}
-                    {blog.cover_image && (
-                        <div className="relative aspect-video overflow-hidden rounded-lg border border-border/50 shadow-sm">
-                            <Image
-                                src={blog.cover_image}
-                                alt={blog.title}
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-                    )}
-
-                    <div className="space-y-4">
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2">
-                            {blog.tags && blog.tags.map((tag) => (
-                                <Badge key={tag} variant="secondary" className="capitalize">
-                                    {tag}
-                                </Badge>
-                            ))}
-                        </div>
-
-                        <h1 className="text-3xl font-extrabold tracking-tight lg:text-5xl leading-tight">
-                            {blog.title}
-                        </h1>
-
-                        <p className="text-xl text-muted-foreground leading-relaxed">
-                            {blog.description}
-                        </p>
-
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                                <Calendar className="size-4" />
-                                <time dateTime={blog.date || blog.created_at}>{formattedDate}</time>
+                    {/* Header */}
+                    <header className="space-y-6">
+                        {/* Hero Image */}
+                        {blog.cover_image && (
+                            <div className="relative aspect-video overflow-hidden rounded-lg border border-border/50 shadow-sm">
+                                <Image
+                                    src={blog.cover_image}
+                                    alt={blog.title}
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                />
                             </div>
-                            {blog.read_time && (
+                        )}
+
+                        <div className="space-y-4">
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2">
+                                {blog.tags && blog.tags.map((tag) => (
+                                    <Badge key={tag} variant="secondary" className="capitalize">
+                                        {tag}
+                                    </Badge>
+                                ))}
+                            </div>
+
+                            <h1 className="text-3xl font-extrabold tracking-tight lg:text-5xl leading-tight">
+                                {blog.title}
+                            </h1>
+
+                            <p className="text-xl text-muted-foreground leading-relaxed">
+                                {blog.description}
+                            </p>
+
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-2">
-                                    <Clock className="size-4" />
-                                    <span>{blog.read_time} min read</span>
+                                    <Calendar className="size-4" />
+                                    <time dateTime={blog.date || blog.created_at}>{formattedDate}</time>
                                 </div>
-                            )}
+                                {blog.read_time && (
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="size-4" />
+                                        <span>{blog.read_time} min read</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+
+                        <Separator />
+                    </header>
+
+                    {/* Content Sections */}
+                    <div className="prose prose-neutral dark:prose-invert max-w-none">
+                        {sections.map((section, index) => (
+                            <section key={section.id} id={`section-${index}`} className="mb-12 last:mb-0">
+                                {section.heading && (
+                                    <h2 className="text-2xl font-bold mb-4">{section.heading}</h2>
+                                )}
+
+                                {section.content && (
+                                    <ReactMarkdown
+                                        remarkPlugins={[remarkGfm]}
+                                        components={markdownComponents}
+                                    >
+                                        {section.content}
+                                    </ReactMarkdown>
+                                )}
+
+                                {/* Images in Section */}
+                                {(() => {
+                                    const validImages = section.image ? section.image.filter(img => img && img.trim() !== '') : [];
+                                    if (validImages.length === 0) return null;
+
+                                    return (
+                                        <div className={`my-8 grid gap-4 ${validImages.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                                            {validImages.map((imgUrl, imgIndex) => (
+                                                <div key={imgIndex} className="relative rounded-lg overflow-hidden border border-border/50">
+                                                    <img
+                                                        src={imgUrl}
+                                                        alt={`Section Visual ${imgIndex + 1}`}
+                                                        className="w-full h-auto object-cover"
+                                                        loading="lazy"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    );
+                                })()}
+
+                                {/* Code Blocks in Section */}
+                                {section.code && section.code.length > 0 && (
+                                    <div className="my-6 space-y-4">
+                                        {section.code.map((rawCodeBlock, idx) => {
+                                            const codeBlock = cleanCodeContent(rawCodeBlock);
+                                            if (!codeBlock) return null;
+                                            return (
+                                                <div key={idx} className="group relative mb-6">
+                                                    <div className="bg-[#0d1117] overflow-x-auto rounded-lg border border-border p-4 text-sm font-mono text-zinc-300">
+                                                        <SyntaxHighlighter
+                                                            style={githubDark}
+                                                            language={section.code_language?.[idx] || 'javascript'} // Fallback or explicit language
+                                                            PreTag="div"
+                                                            className="!bg-transparent !p-0 !m-0"
+                                                            showLineNumbers={false}
+                                                            customStyle={{ background: 'transparent' }}
+                                                        >
+                                                            {codeBlock}
+                                                        </SyntaxHighlighter>
+                                                    </div>
+                                                    <div className="absolute top-3 right-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                                        <CodeCopyButton code={codeBlock} />
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </section>
+                        ))}
                     </div>
 
                     <Separator />
-                </header>
 
-                {/* Content Sections */}
-                <div className="prose prose-neutral dark:prose-invert max-w-none">
-                    {sections.map((section, index) => (
-                        <section key={section.id} id={`section-${index}`} className="mb-12 last:mb-0">
-                            {section.heading && (
-                                <h2 className="text-2xl font-bold mb-4">{section.heading}</h2>
-                            )}
+                    {/* Interaction & Comments */}
+                    <div className="space-y-8 pb-12">
+                        <BlogInteractionBar blog={blog} visitorId={visitorId} />
 
-                            {section.content && (
-                                <ReactMarkdown
-                                    remarkPlugins={[remarkGfm]}
-                                    components={markdownComponents}
-                                >
-                                    {section.content}
-                                </ReactMarkdown>
-                            )}
-
-                            {/* Images in Section */}
-                            {(() => {
-                                const validImages = section.image ? section.image.filter(img => img && img.trim() !== '') : [];
-                                if (validImages.length === 0) return null;
-
-                                return (
-                                    <div className={`my-8 grid gap-4 ${validImages.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
-                                        {validImages.map((imgUrl, imgIndex) => (
-                                            <div key={imgIndex} className="relative rounded-lg overflow-hidden border border-border/50">
-                                                <img
-                                                    src={imgUrl}
-                                                    alt={`Section Visual ${imgIndex + 1}`}
-                                                    className="w-full h-auto object-cover"
-                                                    loading="lazy"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                );
-                            })()}
-
-                            {/* Code Blocks in Section */}
-                            {section.code && section.code.length > 0 && (
-                                <div className="my-6 space-y-4">
-                                    {section.code.map((rawCodeBlock, idx) => {
-                                        const codeBlock = cleanCodeContent(rawCodeBlock);
-                                        if (!codeBlock) return null;
-                                        return (
-                                            <div key={idx} className="group relative mb-6">
-                                                <div className="bg-[#0d1117] overflow-x-auto rounded-lg border border-border p-4 text-sm font-mono text-zinc-300">
-                                                    <SyntaxHighlighter
-                                                        style={githubDark}
-                                                        language={section.code_language?.[idx] || 'javascript'} // Fallback or explicit language
-                                                        PreTag="div"
-                                                        className="!bg-transparent !p-0 !m-0"
-                                                        showLineNumbers={false}
-                                                        customStyle={{ background: 'transparent' }}
-                                                    >
-                                                        {codeBlock}
-                                                    </SyntaxHighlighter>
-                                                </div>
-                                                <div className="absolute top-3 right-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                                                    <CodeCopyButton code={codeBlock} />
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            )}
-                        </section>
-                    ))}
-                </div>
-
-                <Separator />
-
-                {/* Interaction & Comments */}
-                <div className="space-y-8 pb-12">
-                    <BlogInteractionBar blog={blog} visitorId={visitorId} />
-
-                    <div className="rounded-lg bg-card border border-border p-6 md:p-8">
-                        <h3 className="text-xl font-bold mb-6">Comments</h3>
-                        <CommentSection blogId={blog.id} />
+                        <div className="rounded-lg bg-card border border-border p-6 md:p-8">
+                            <h3 className="text-xl font-bold mb-6">Comments</h3>
+                            <CommentSection blogId={blog.id} />
+                        </div>
                     </div>
-                </div>
 
-            </article>
-        </Container>
+                </article>
+            </Container>
+            <FontSizeControls />
+        </>
     );
 };
 

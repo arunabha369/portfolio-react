@@ -241,6 +241,10 @@
 }
 
 /* Blog font size controls */
+:root {
+  --blog-font-size: 16px;
+}
+
 .prose {
   font-size: var(--blog-font-size);
 }
