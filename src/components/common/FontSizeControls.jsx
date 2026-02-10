@@ -76,7 +76,7 @@ export default function FontSizeControls() {
             <Button
               variant="outline"
               size="icon"
-              className="bg-background/95 border-border hover:bg-accent fixed top-24 right-6 z-40 h-12 w-12 rounded-full border shadow-lg backdrop-blur-sm"
+              className="bg-background/95 border-border hover:bg-accent fixed top-28 right-6 z-50 h-12 w-12 rounded-full border shadow-lg backdrop-blur-sm"
               aria-label="Open font size controls"
             >
               <Settings size={20} />
