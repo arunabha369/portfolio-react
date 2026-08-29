@@ -26,9 +26,9 @@ export const instagramLinks = [
     },
     {
         name: 'Grow With Hustler',
-        description: 'Motivation, hustle, and growth mindset.',
-        href: 'https://www.instagram.com/growwithhustler/',
-        tags: ['Motivation', 'Growth'],
+        description: 'Digital agency building websites and web apps for clients.',
+        href: 'https://www.instagram.com/growwithhustler.in/',
+        tags: ['Agency', 'Web Development'],
         type: 'instagram',
         image: '/hustler.png'
     },
@@ -77,9 +77,9 @@ export const youtubeLinks = [
     },
     {
         name: 'Grow With Hustler',
-        description: 'Self-improvement and hustle motivation.',
+        description: 'Digital agency building websites and web apps for clients.',
         href: 'https://www.youtube.com/@Grow.with.hustler',
-        tags: ['Motivation', 'Growth'],
+        tags: ['Agency', 'Web Development'],
         type: 'youtube',
         image: '/hustler.png'
     },
