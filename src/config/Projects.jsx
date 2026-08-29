@@ -24,6 +24,25 @@ import Vercel from '@/components/technologies/Vercel';
 
 export const projects = [
     {
+        title: "Grow With Hustler",
+        description: "A digital agency website for Grow With Hustler — building software that grows businesses. From stunning websites to powerful web apps and AI solutions, turning ideas into high-performing digital products.",
+        image: '/project/grow-with-hustler.png',
+        link: 'https://growwithhustler.in',
+        github: 'https://github.com/arunabha369/Gwh',
+        live: 'https://growwithhustler.in',
+        technologies: [
+            { name: 'Next.js', icon: <NextJs key="nextjs-gwh" /> },
+            { name: 'Tailwind CSS', icon: <TailwindCss key="tailwind-gwh" /> },
+            { name: 'Node.js', icon: <NodeJs key="nodejs-gwh" /> },
+            { name: 'Express', icon: <ExpressJs key="express-gwh" /> },
+            { name: 'MongoDB', icon: <MongoDB key="mongodb-gwh" /> }
+        ],
+        details: true,
+        projectDetailsPageSlug: '/projects/grow-with-hustler',
+        isWorking: true,
+        featured: true
+    },
+    {
         title: "HRSphere",
         description: "A scalable Human Resource Management System that streamlines core HR processes — from employee records and attendance to recruitment, payroll, and performance.",
         image: '/project/hrsphere.png',
