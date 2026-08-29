@@ -17,7 +17,7 @@ export const devices = [{
   name: 'Apple AirPods(2nd gen)',
   icon: <Headphones className="size-4" />
 }, {
-  name: 'CMF by Nothing Phone 2 Pro (White, 128 GB) (8 GB RAM)',
+  name: 'Nothing Phone (3a) (White, 128 GB) (8 GB RAM)',
   icon: <Phone className="size-4" />
 }, {
   name: 'ZEBRONICS 68.58 cm (27 inch) ZEB-IGM 102 (ZEB-N27A)',
@@ -26,7 +26,7 @@ export const devices = [{
   name: 'Redgear Shadow Blade Mechanical Keyboard',
   icon: <Keyboard className="size-4" />
 }, {
-  name: 'Flipkart SmartBuy E703T Wireless Optical Mouse with Bluetooth',
+  name: 'Portronics Toad One Wireless Optical Mouse ',
   icon: <Mouse className="size-4" />
 }, {
   name: 'Noise Airwave Max 3 Bluetooth On Ear Headphones',
