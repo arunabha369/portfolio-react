@@ -5,6 +5,7 @@ import CTA from '@/components/landing/CTA';
 import Github from '@/components/landing/Github';
 import Hero from '@/components/landing/Hero';
 import Journey from '@/components/landing/Journey';
+import Skills from '@/components/landing/Skills';
 import Work from '@/components/landing/Projects';
 
 import React from 'react';
@@ -18,6 +19,7 @@ export default function page() {
     <Hero />
     <Work />
     <About />
+    <Skills />
     <Github />
     <Blog />
     <CTA />
