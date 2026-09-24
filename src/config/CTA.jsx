@@ -13,5 +13,12 @@ export const ctaConfig = {
   linkText: 'Book a Free Call',
   calLink: 'arunabha-banerjee-1wlqgk',
   // Pre-text message
-  preText: "Hey, you scrolled this far, let's talk."
+  preText: "Hey, you scrolled this far, let's talk.",
+  // Venn labels around the portrait; \n breaks a label onto two lines.
+  focusAreas: {
+    top: 'Frontend Engineering',
+    left: 'Backend & APIs',
+    right: 'UI / UX Design',
+    bottom: 'Databases\n& System Design'
+  }
 };

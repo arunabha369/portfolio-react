@@ -1,7 +1,7 @@
 import { ctaConfig } from '@/config/CTA';
 import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
 import Cal, { getCalApi } from '@calcom/embed-react';
-import Image from '@/components/ui/Image';
+import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import Container from '@/components/common/Container';
@@ -22,6 +22,7 @@ export default function CTA({
     linkText = ctaConfig.linkText,
     calLink = ctaConfig.calLink,
     preText = ctaConfig.preText,
+    focusAreas = ctaConfig.focusAreas,
 }) {
     const { triggerHaptic, isMobile } = useHapticFeedback();
 
@@ -68,56 +69,58 @@ export default function CTA({
 
     return (
         <>
-            <Container className="mt-20 rounded-md border border-dashed border-black/20 py-8 dark:border-white/10 mb-20">
-                <div className="mt-6 w-full flex flex-col items-center justify-center px-6 pb-8 text-center sm:px-12">
-                    <p className="mb-4 text-center text-base opacity-50 sm:mb-6 md:text-xl">
-                        {preText}
-                    </p>
-                    <div className="flex w-full justify-center">
-                        <div
-                            className="group inline-flex cursor-pointer items-center self-end rounded-md border border-dashed border-black/20 bg-black/5 px-2 py-1 text-sm text-black shadow-[0_0_5px_rgba(0,0,0,0.1)] transition-all dark:border-white/30 dark:bg-white/15 dark:text-white dark:shadow-[0_0_5px_rgba(255,255,255,0.1)]"
-                            onClick={handleButtonClick}
-                        >
-                            <div className="relative z-20 flex items-center transition-all duration-300">
-                                <div className="h-5 w-5 flex-shrink-0 overflow-hidden rounded-full mr-2 transition-all duration-300 group-hover:mr-1">
-                                    <Image
-                                        alt={profileAlt}
-                                        width={20}
-                                        height={20}
-                                        className="h-full w-full object-cover"
-                                        src={profileImage}
-                                        style={{ color: 'transparent' }}
-                                    />
-                                </div>
-                                <div className="group-hover:max-w-[100px] max-w-0 flex items-center overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100">
-                                    <div className="flex items-center min-w-max pr-2">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="h-3 w-3"
-                                        >
-                                            <path d="M5 12h14"></path>
-                                            <path d="M12 5v14"></path>
-                                        </svg>
-                                        <div className="mr-0 ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/10 text-[8px] dark:bg-white/10">
-                                            You
-                                        </div>
-                                    </div>
-                                </div>
-                                <span className="relative block text-sm font-bold whitespace-nowrap transition-all duration-300">
-                                    {linkText}
-                                </span>
-                            </div>
+            <Container className="mt-20 mb-20">
+                <section aria-label="Areas of focus" className="rounded-lg border border-black/10 px-5 py-8 dark:border-white/10">
+                    <div className="relative mx-auto aspect-square w-full max-w-xs sm:max-w-md md:max-w-lg">
+                        <div aria-hidden className="absolute top-0 left-1/2 h-[55%] w-[55%] -translate-x-1/2 rounded-full border border-foreground/10" />
+                        <div aria-hidden className="absolute top-[22%] left-[2%] h-[55%] w-[55%] rounded-full border border-foreground/10" />
+                        <div aria-hidden className="absolute top-[22%] right-[2%] h-[55%] w-[55%] rounded-full border border-foreground/10" />
+                        <div aria-hidden className="absolute bottom-0 left-1/2 h-[55%] w-[55%] -translate-x-1/2 rounded-full border border-foreground/10" />
+
+                        <span className="absolute top-[14%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[10px] whitespace-nowrap text-foreground/50 sm:text-xs md:text-sm">
+                            {focusAreas.top}
+                        </span>
+                        <span className="absolute top-1/2 left-[15%] -translate-x-1/2 -translate-y-1/2 text-center text-[10px] whitespace-nowrap text-foreground/50 sm:text-xs md:text-sm">
+                            {focusAreas.left}
+                        </span>
+                        <span className="absolute top-1/2 right-[15%] translate-x-1/2 -translate-y-1/2 text-center text-[10px] whitespace-nowrap text-foreground/50 sm:text-xs md:text-sm">
+                            {focusAreas.right}
+                        </span>
+                        <span className="absolute bottom-[14%] left-1/2 -translate-x-1/2 translate-y-1/2 text-center text-[10px] leading-tight whitespace-pre text-foreground/50 sm:text-xs md:text-sm">
+                            {focusAreas.bottom}
+                        </span>
+
+                        <div className="absolute top-1/2 left-1/2 size-14 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-2 border-background bg-neutral-800 shadow-md sm:size-16 sm:border-4 md:size-20">
+                            <img src={profileImage} alt={profileAlt} className="size-full object-cover" />
                         </div>
                     </div>
-                </div>
+
+                    <div className="flex w-full flex-col items-center px-5 pt-2 sm:px-10">
+                        <p className="mb-5 text-center text-sm text-balance opacity-70 md:text-lg">
+                            {preText}
+                        </p>
+                        <button
+                            type="button"
+                            onClick={handleButtonClick}
+                            className="group inline-flex cursor-pointer items-center rounded-md border border-black/10 bg-black/[0.03] px-2 py-1 text-sm text-black shadow-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-white/15 dark:bg-white/15 dark:text-white dark:shadow-[0_0_5px_rgba(255,255,255,0.1)]"
+                        >
+                            <span className="relative z-20 flex items-center gap-2 transition-[gap] duration-300 group-hover:gap-8">
+                                <span className="size-5 shrink-0 overflow-hidden rounded-full">
+                                    <img alt="" width={20} height={20} className="size-full object-cover" src={profileImage} />
+                                </span>
+                                <span aria-hidden className="absolute left-6 flex -translate-x-full items-center opacity-0 transition-[transform,opacity] duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                                    <Plus className="size-3" />
+                                    <span className="mr-2 ml-1 flex size-5 items-center justify-center rounded-full bg-black/10 text-[8px] dark:bg-white/10">
+                                        You
+                                    </span>
+                                </span>
+                                <span className="relative ml-0 block text-sm font-bold whitespace-nowrap transition-[margin-left] duration-300 group-hover:ml-4">
+                                    {linkText}
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </section>
             </Container>
 
             {/* Step 1: Pre-qualification Dialog */}
