@@ -1,37 +1,34 @@
 import { navbarConfig } from '@/config/Navbar';
 import Link from '@/components/ui/Link';
-import Image from '@/components/ui/Image';
 import React from 'react';
 import Container from './Container';
 import { ThemeToggleButton } from './ThemeSwitch';
 
 export default function Navbar() {
   return (
-    <Container className="sticky top-0 z-20 rounded-md py-4 backdrop-blur-sm">
-      <div className="flex items-center justify-between px-6">
-        <div className="flex items-baseline gap-4">
-          <Link href="/">
-            <Image
-              className="h-12 w-12 rounded-md border border-gray-200 bg-blue-300 transition-all duration-300 ease-in-out hover:scale-90 dark:bg-yellow-300"
-              src={navbarConfig.logo.src}
-              alt={navbarConfig.logo.alt}
-              width={navbarConfig.logo.width}
-              height={navbarConfig.logo.height}
-            />
-          </Link>
-          <div className="flex items-center justify-center gap-4">
-            {navbarConfig.navItems.map((item) => (
+    <Container className="sticky top-0 z-20 py-4 backdrop-blur-sm">
+      <div className="flex items-center justify-between gap-4 px-4">
+        <Link
+          href="/"
+          className="rounded-md border-2 border-foreground px-2 pt-0.5 pb-1 font-pixel text-2xl leading-none tracking-wide text-foreground uppercase outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        >
+          {navbarConfig.wordmark}
+          <span className="sr-only"> - home</span>
+        </Link>
+
+        <div className="flex items-center gap-4">
+          <nav aria-label="Main" className="flex items-center gap-4">
+            {navbarConfig.navItems.map(item => (
               <Link
-                className="transition-all duration-300 ease-in-out hover:underline hover:decoration-2 hover:underline-offset-4"
                 key={item.label}
                 href={item.href}
+                className="text-sm font-light underline-offset-[5px] hover:underline sm:text-base"
               >
                 {item.label}
               </Link>
             ))}
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
+          </nav>
+          <span aria-hidden className="h-4 w-px bg-border" />
           <ThemeToggleButton variant="circle" start="top-right" blur />
         </div>
       </div>

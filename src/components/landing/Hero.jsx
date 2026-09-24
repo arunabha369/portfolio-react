@@ -6,7 +6,6 @@ import React from 'react';
 import Container from '../common/Container';
 import MagneticButton from '../common/MagneticButton';
 import TextCycle from '../common/TextCycle';
-import InteractiveDots from './InteractiveDots';
 
 const connectClass = 'skill-inner-shadow text-foreground inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-black/10 bg-black/[0.03] px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors hover:border-black/30 dark:border-white/15 dark:bg-white/[0.04] dark:hover:border-white/35';
 
@@ -19,9 +18,7 @@ export default function Hero() {
   const { fullName, roles, avatar, email, callUrl } = heroConfig;
 
   return <Container>
-    <InteractiveDots className="h-24 w-full border-b border-black/10 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)] sm:h-32 dark:border-white/10" />
-
-    <header className="flex items-start gap-4 pt-6 text-left sm:gap-5">
+    <header className="flex items-start gap-4 text-left sm:gap-5">
       <div className="w-fit shrink-0 rounded-[10px] border border-black/10 p-[3px] dark:border-white/15">
         <div className="size-20 overflow-hidden rounded-[7px] border border-black/10 bg-neutral-200 sm:size-24 dark:border-white/10 dark:bg-neutral-800">
           <img src={avatar} alt={`${fullName} portrait`} width={96} height={96} fetchPriority="high" className="size-full object-cover" />
