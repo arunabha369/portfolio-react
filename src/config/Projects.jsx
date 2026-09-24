@@ -24,6 +24,24 @@ import Vercel from '@/components/technologies/Vercel';
 
 export const projects = [
     {
+        title: "Aahar Sathi",
+        description: "AI-Powered Nutrition & Budget Meal Companion (India-First). Aahar Sathi is an AI-driven nutrition tracking and food recommendation platform designed specifically for Indian users.",
+        image: '/project/aahar-sathi.png',
+        link: 'https://aaharsathi.in/',
+        github: 'https://github.com/arunabha369/aahar-sathi',
+        live: 'https://aaharsathi.in/',
+        technologies: [
+            { name: 'Next.js', icon: <NextJs key="nextjs" /> },
+            { name: 'Tailwind CSS', icon: <TailwindCss key="tailwind" /> },
+            { name: 'Node.js', icon: <NodeJs key="nodejs" /> },
+            { name: 'Express', icon: <ExpressJs key="express" /> },
+            { name: 'MongoDB', icon: <MongoDB key="mongodb" /> }
+        ],
+        details: true,
+        projectDetailsPageSlug: '/projects/aahar-sathi',
+        isWorking: false
+    },
+    {
         title: "Grow With Hustler",
         description: "A digital agency website for Grow With Hustler — building software that grows businesses. From stunning websites to powerful web apps and AI solutions, turning ideas into high-performing digital products.",
         image: '/project/grow-with-hustler.png',
@@ -163,23 +181,5 @@ export const projects = [
         details: true,
         projectDetailsPageSlug: '/projects/portfolio-website',
         isWorking: true
-    },
-    {
-        title: "Aahar Sathi",
-        description: "AI-Powered Nutrition & Budget Meal Companion (India-First). Aahar Sathi is an AI-driven nutrition tracking and food recommendation platform designed specifically for Indian users.",
-        image: '/project/aahar-sathi.png',
-        link: 'https://aaharsathi.in/',
-        github: 'https://github.com/arunabha369/aahar-sathi',
-        live: 'https://aaharsathi.in/',
-        technologies: [
-            { name: 'Next.js', icon: <NextJs key="nextjs" /> },
-            { name: 'Tailwind CSS', icon: <TailwindCss key="tailwind" /> },
-            { name: 'Node.js', icon: <NodeJs key="nodejs" /> },
-            { name: 'Express', icon: <ExpressJs key="express" /> },
-            { name: 'MongoDB', icon: <MongoDB key="mongodb" /> }
-        ],
-        details: true,
-        projectDetailsPageSlug: '/projects/aahar-sathi',
-        isWorking: false
     }
 ];
