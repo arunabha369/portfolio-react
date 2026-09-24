@@ -1,103 +1,97 @@
-
 import { githubConfig } from '@/config/Github';
 import { useTheme } from 'next-themes';
 import dynamic from '@/components/ui/dynamic';
 import Link from '@/components/ui/Link';
-import { useEffect, useState } from 'react';
+import { cloneElement, useCallback, useEffect, useRef, useState } from 'react';
 import Container from '../common/Container';
 import SectionHeading from '../common/SectionHeading';
 import GithubIcon from '../svgs/Github';
 import { Button } from '../ui/button';
-const ActivityCalendar = dynamic(() => import('react-activity-calendar'), {
-  ssr: false
-});
-// Helper function to filter contributions to start from April
-function filterLastYear(contributions) {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const startDate = new Date(currentYear - 1, 7, 1); // August 1st of previous year
-  const endDate = new Date(currentYear, 3, 30); // April 30th of current year
 
-  return contributions.filter(item => {
-    const itemDate = new Date(item.date);
-    return itemDate >= startDate && itemDate <= endDate;
+const ActivityCalendar = dynamic(() => import('react-activity-calendar'));
+
+// "2025-26" when the window straddles new year, "2026" otherwise.
+function rangeLabel(contributions) {
+  const first = contributions[0]?.date.slice(0, 4);
+  const last = contributions.at(-1)?.date.slice(0, 4);
+  if (!first || !last) return String(new Date().getFullYear());
+  return first === last ? first : `${first}-${last.slice(2)}`;
+}
+
+function dayLabel(iso) {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
   });
 }
+
+// Tag each cell with its data so one delegated hover handler can read it.
+const renderBlock = (block, activity) => cloneElement(block, {
+  'data-date': activity.date,
+  'data-count': activity.count
+});
+
 export default function Github() {
   const [contributions, setContributions] = useState([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const {
-    theme
-  } = useTheme();
+  const [hovered, setHovered] = useState(null);
+  const wrapperRef = useRef(null);
+  const { resolvedTheme } = useTheme();
+
   useEffect(() => {
+    let cancelled = false;
     async function fetchData() {
       try {
-        setIsLoading(true);
-        const response = await fetch(`${githubConfig.apiUrl}/${githubConfig.username}.json`);
+        const response = await fetch(`${githubConfig.apiUrl}/${githubConfig.username}?y=last`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-        if (data?.contributions && Array.isArray(data.contributions)) {
-          // Flatten the nested array structure
-          const flattenedContributions = data.contributions.flat();
-
-          // Convert contribution levels to numbers
-          const contributionLevelMap = {
-            NONE: 0,
-            FIRST_QUARTILE: 1,
-            SECOND_QUARTILE: 2,
-            THIRD_QUARTILE: 3,
-            FOURTH_QUARTILE: 4
-          };
-
-          // Transform to the expected format
-          const validContributions = flattenedContributions.filter(item => typeof item === 'object' && item !== null && 'date' in item && 'contributionCount' in item && 'contributionLevel' in item).map(item => ({
-            date: String(item.date),
-            count: Number(item.contributionCount || 0),
-            level: contributionLevelMap[item.contributionLevel] || 0
-          }));
-          if (validContributions.length > 0) {
-            // Calculate total contributions
-            const total = validContributions.reduce((sum, item) => sum + item.count, 0);
-            setTotalContributions(total);
-
-            // Filter to show only the past year
-            const filteredContributions = filterLastYear(validContributions);
-            setContributions(filteredContributions);
-          } else {
-            setHasError(true);
-          }
-        } else {
+        if (cancelled) return;
+        if (!Array.isArray(data?.contributions) || data.contributions.length === 0) {
           setHasError(true);
+          return;
         }
+        setContributions(data.contributions);
+        setTotalContributions(data.total?.lastYear ?? data.contributions.reduce((sum, day) => sum + day.count, 0));
       } catch (err) {
         console.error('Failed to fetch GitHub contributions:', err);
-        setHasError(true);
+        if (!cancelled) setHasError(true);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     }
     fetchData();
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  const handleHover = useCallback(event => {
+    const { date, count } = event.target.dataset ?? {};
+    if (!date || count === undefined || !wrapperRef.current) {
+      setHovered(null);
+      return;
+    }
+    // Measured against the non-scrolling wrapper so the tooltip stays aligned when the graph scrolls sideways.
+    const cell = event.target.getBoundingClientRect();
+    const box = wrapperRef.current.getBoundingClientRect();
+    setHovered({
+      count: Number(count),
+      label: dayLabel(date),
+      x: cell.left + cell.width / 2 - box.left,
+      y: cell.top - box.top
+    });
+  }, []);
+
   return <Container className="mt-20">
     <div className="space-y-6">
-      {/* Header */}
-      {/* Header */}
       <SectionHeading subHeading="Featured" heading={githubConfig.title} />
-      <div className="flex flex-col items-start text-left">
-        <p className="text-muted-foreground text-sm">
-          <b>{githubConfig.username}</b>&apos;s {githubConfig.subtitle}
-        </p>
-        {!isLoading && !hasError && totalContributions > 0 && <p className="text-primary mt-1 text-sm font-medium">
-          Total:{' '}
-          <span className="font-black">
-            {totalContributions.toLocaleString()}
-          </span>{' '}
-          contributions
-        </p>}
-      </div>
+      <p className="text-muted-foreground text-left text-sm">
+        <b>{githubConfig.username}</b>&apos;s {githubConfig.subtitle}
+      </p>
 
-      {/* Content */}
       {isLoading ? <div className="flex items-center justify-center py-16">
         <div className="text-center">
           <div className="border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"></div>
@@ -105,7 +99,7 @@ export default function Github() {
             {githubConfig.loadingState.description}
           </p>
         </div>
-      </div> : hasError || contributions.length === 0 ? <div className="text-muted-foreground border-border rounded-xl border-2 border-dashed p-8 text-center">
+      </div> : hasError ? <div className="text-muted-foreground border-border rounded-xl border-2 border-dashed p-8 text-center">
         <div className="bg-muted mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
           <GithubIcon className="h-8 w-8" />
         </div>
@@ -119,18 +113,23 @@ export default function Github() {
             {githubConfig.errorState.buttonText}
           </Link>
         </Button>
-      </div> : <div className="relative overflow-hidden">
-        <div className="bg-background/50 relative rounded-lg border border-dashed border-black/20 p-6 backdrop-blur-sm dark:border-white/10">
-          <div className="w-full overflow-x-auto">
-            <ActivityCalendar data={contributions} blockSize={12} blockMargin={4} fontSize={githubConfig.fontSize} colorScheme={theme === 'dark' ? 'dark' : 'light'} maxLevel={githubConfig.maxLevel} hideTotalCount={true} hideColorLegend={false} hideMonthLabels={false} theme={githubConfig.theme} labels={{
-              months: githubConfig.months,
-              weekdays: githubConfig.weekdays,
-              totalCount: githubConfig.totalCountLabel
-            }} style={{
-              color: 'rgb(139, 148, 158)'
-            }} />
-          </div>
-        </div>
+      </div> : <div ref={wrapperRef} className="relative rounded-lg border border-black/10 px-4 py-5 sm:px-6 dark:border-white/10" onMouseOver={handleHover} onMouseLeave={() => setHovered(null)}>
+        {hovered && <div role="status" className="bg-foreground text-background pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap shadow-md" style={{ left: hovered.x, top: hovered.y - 6 }}>
+          {hovered.count === 1 ? '1 contribution' : `${hovered.count} contributions`} on {hovered.label}
+        </div>}
+        <ActivityCalendar
+          data={contributions}
+          totalCount={totalContributions}
+          blockSize={9}
+          blockMargin={3}
+          blockRadius={2}
+          fontSize={11}
+          colorScheme={resolvedTheme === 'light' ? 'light' : 'dark'}
+          theme={githubConfig.theme}
+          renderBlock={renderBlock}
+          labels={{ totalCount: `{{count}} contributions in ${rangeLabel(contributions)}` }}
+          style={{ margin: '0 auto', color: 'var(--muted-foreground)', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace' }}
+        />
       </div>}
     </div>
   </Container>;
