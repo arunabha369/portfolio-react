@@ -16,23 +16,15 @@ import remarkGfm from 'remark-gfm';
 export default function ProjectCaseStudyPage() {
   const { slug } = useParams();
   const caseStudy = getProjectCaseStudyBySlug(slug);
+  const frontmatter = caseStudy?.frontmatter;
   const [readmeContent, setReadmeContent] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  if (!caseStudy) {
-    return <NotFound />;
-  }
-
-  const { frontmatter } = caseStudy;
-  const navigation = getProjectNavigation(slug);
-  const relatedProjects = getRelatedProjectCaseStudies(slug, 2);
-
   const [repoInfo, setRepoInfo] = useState(null);
 
   useEffect(() => {
     const fetchReadme = async () => {
-      if (!frontmatter.github) {
+      if (!frontmatter?.github) {
         setLoading(false);
         return;
       }
@@ -69,7 +61,6 @@ export default function ProjectCaseStudyPage() {
             }
           } catch (err) {
             console.warn(`Failed to fetch from ${branch}:`, err);
-            fetchError = err;
           }
         }
 
@@ -89,7 +80,14 @@ export default function ProjectCaseStudyPage() {
     };
 
     fetchReadme();
-  }, [frontmatter.github]);
+  }, [frontmatter?.github]);
+
+  if (!caseStudy) {
+    return <NotFound />;
+  }
+
+  const navigation = getProjectNavigation(slug);
+  const relatedProjects = getRelatedProjectCaseStudies(slug, 2);
 
   // Helper to resolve image URLs
   const resolveImageUrl = (src) => {
