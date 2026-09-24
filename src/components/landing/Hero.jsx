@@ -1,108 +1,64 @@
-import { heroConfig, skillComponents, socialLinks } from '@/config/Hero';
-import { supabase } from '@/lib/supabase';
-import { parseTemplate } from '@/lib/hero';
-import { cn } from '@/lib/utils';
+import { about } from '@/config/About';
+import { heroConfig, socialLinks } from '@/config/Hero';
 import Link from '@/components/ui/Link';
-import Image from '@/components/ui/Image';
-import React, { useState, useEffect } from 'react';
+import { FileText, Mail, Send, Video } from 'lucide-react';
+import React from 'react';
 import Container from '../common/Container';
-import Skill from '../common/Skill';
-import CV from '../svgs/CV';
-import Chat from '../svgs/Chat';
-import { Button } from '../ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
-const buttonIcons = {
-  CV: CV,
-  Chat: Chat
-};
+import MagneticButton from '../common/MagneticButton';
+import TextCycle from '../common/TextCycle';
+import InteractiveDots from './InteractiveDots';
+
+const connectClass = 'skill-inner-shadow text-foreground inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-black/10 bg-black/[0.03] px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors hover:border-black/30 dark:border-white/15 dark:bg-white/[0.04] dark:hover:border-white/35';
+
+const internalLinks = [
+  { name: 'Resume', href: '/resume', icon: <FileText /> },
+  { name: 'Contact', href: '/contact', icon: <Send /> }
+];
+
 export default function Hero() {
-  const {
-    name,
-    title,
-    avatar,
-    skills,
-    description,
-    buttons
-  } = heroConfig;
+  const { fullName, roles, avatar, email, callUrl } = heroConfig;
 
-  const [heroBg, setHeroBg] = useState(''); // Added state for hero background
+  return <Container>
+    <InteractiveDots className="h-24 w-full border-b border-black/10 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)] sm:h-32 dark:border-white/10" />
 
-  useEffect(() => {
-    const fetchHeroBg = async () => {
-      const { data } = await supabase
-        .from('blogs')
-        .select('cover_image')
-        .eq('is_published', true)
-        .not('cover_image', 'is', null)
-        .neq('cover_image', '')
-        .neq('cover_image', '')
-        .order('pinned', { ascending: false })
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-      if (data?.cover_image) setHeroBg(data.cover_image);
-    };
-    fetchHeroBg();
-  }, []);
-
-  const renderDescription = () => {
-    const parts = parseTemplate(description.template, skills);
-    return parts.map(part => {
-      if (part.type === 'skill' && 'skill' in part && part.skill) {
-        const SkillComponent = skillComponents[part.skill.component];
-        return <Skill key={part.key} name={part.skill.name} href={part.skill.href}>
-          <SkillComponent />
-        </Skill>;
-      } else if (part.type === 'bold' && 'text' in part) {
-        return <b key={part.key} className="text-primary whitespace-pre-wrap">
-          {part.text}
-        </b>;
-      } else if (part.type === 'text' && 'text' in part) {
-        return <span key={part.key} className="whitespace-pre-wrap">
-          {part.text}
-        </span>;
-      }
-      return null;
-    });
-  };
-  return <Container className="mx-auto max-w-5xl">
-    {/* Image */}
-    <Image src={avatar} alt="hero" width={100} height={100} className="size-24 rounded-full bg-black" />
-
-    {/* Text Area */}
-    <div className="mt-8 flex flex-col gap-2 items-center text-center sm:items-start sm:text-left">
-      <h1 className="text-2xl font-bold whitespace-normal sm:whitespace-nowrap sm:text-3xl md:text-4xl">
-        Hi, I&apos;m {name} — <span className="text-secondary">{title}</span>
-      </h1>
-
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-base whitespace-pre-wrap text-neutral-500 md:text-lg text-center sm:text-left sm:justify-start">
-        {renderDescription()}
+    <header className="flex items-start gap-4 pt-6 text-left sm:gap-5">
+      <div className="w-fit shrink-0 rounded-[10px] border border-black/10 p-[3px] dark:border-white/15">
+        <div className="size-20 overflow-hidden rounded-[7px] border border-black/10 bg-neutral-200 sm:size-24 dark:border-white/10 dark:bg-neutral-800">
+          <img src={avatar} alt={`${fullName} portrait`} width={96} height={96} fetchPriority="high" className="size-full object-cover" />
+        </div>
       </div>
-    </div>
 
-    {/* Buttons */}
-    <div className="mt-8 flex gap-4 justify-center sm:justify-start">
-      {buttons.map((button, index) => {
-        const IconComponent = buttonIcons[button.icon];
-        return <Button key={index} variant={button.variant} className={cn(button.variant === 'outline' && 'inset-shadow-indigo-500', button.variant === 'default' && 'inset-shadow-indigo-500')}>
-          {IconComponent && <IconComponent />}
-          <Link href={button.href}>{button.text}</Link>
-        </Button>;
-      })}
-    </div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl dark:text-neutral-50">
+          {fullName}
+        </h1>
+        <p className="flex min-h-7 items-center text-base font-medium text-neutral-500 md:text-lg dark:text-neutral-400">
+          <TextCycle items={roles} />
+        </p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <MagneticButton href={callUrl} label="Book a call" icon={<Video aria-hidden className="size-3.5 shrink-0 text-yellow-400 dark:text-yellow-600" />} />
+          <MagneticButton href={`mailto:${email}`} label="Send an email" external={false} icon={<Mail aria-hidden className="size-3.5 shrink-0" />} />
+        </div>
+      </div>
+    </header>
 
-    {/* Social Links */}
-    <div className="mt-8 flex gap-2 justify-center sm:justify-start">
-      {socialLinks.map(link => <Tooltip key={link.name} delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Link href={link.href} key={link.name} className="text-secondary flex items-center gap-2" target="_blank" rel="noopener noreferrer">
-            <span className="size-6">{link.icon}</span>
-          </Link>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{link.name}</p>
-        </TooltipContent>
-      </Tooltip>)}
-    </div>
+    <p className="mt-6 text-left text-base leading-relaxed text-neutral-600 dark:text-neutral-400">
+      {about.description}
+    </p>
+
+    <ul className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
+      {internalLinks.map(item => <li key={item.name} className="flex min-w-0">
+        <Link href={item.href} className={connectClass}>
+          <span aria-hidden className="size-3.5 shrink-0 [&>svg]:size-full">{item.icon}</span>
+          <span className="truncate">{item.name}</span>
+        </Link>
+      </li>)}
+      {socialLinks.map(item => <li key={item.name} className="flex min-w-0">
+        <a href={item.href} target={item.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer" className={connectClass}>
+          <span aria-hidden className="size-3.5 shrink-0 [&>svg]:size-full">{item.icon}</span>
+          <span className="truncate">{item.name}</span>
+        </a>
+      </li>)}
+    </ul>
   </Container>;
 }
