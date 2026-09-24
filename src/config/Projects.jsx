@@ -24,6 +24,22 @@ import Vercel from '@/components/technologies/Vercel';
 
 export const projects = [
     {
+        title: "Puja Parikrama v2",
+        description: "Plan your perfect Durga Puja journey! 🎉 Puja Parikrama Planner is a web app that helps you discover pandals, generate smart itineraries, explore interactive maps, and save/share your personalized Puja plan.",
+        image: '/project/pujaparikrama-v2.png',
+        link: 'https://pujaparikrama.in',
+        github: 'https://github.com/arunabha369/puja-parikrama-v2',
+        live: 'https://pujaparikrama.in',
+        technologies: [
+            { name: 'React', icon: <ReactIcon key="react" /> },
+            { name: 'JavaScript', icon: <JavaScript key="js" /> },
+            { name: 'Netlify', icon: <Netlify key="netlify" /> }
+        ],
+        details: true,
+        projectDetailsPageSlug: '/projects/puja-parikrama-v2',
+        isWorking: false
+    },
+    {
         title: "Aahar Sathi",
         description: "AI-Powered Nutrition & Budget Meal Companion (India-First). Aahar Sathi is an AI-driven nutrition tracking and food recommendation platform designed specifically for Indian users.",
         image: '/project/aahar-sathi.png',
@@ -130,22 +146,6 @@ export const projects = [
         ],
         details: true,
         projectDetailsPageSlug: '/projects/bharat-darshan',
-        isWorking: false
-    },
-    {
-        title: "Puja Parikrama v2",
-        description: "Plan your perfect Durga Puja journey! 🎉 Puja Parikrama Planner is a web app that helps you discover pandals, generate smart itineraries, explore interactive maps, and save/share your personalized Puja plan.",
-        image: '/project/pujaparikrama.png',
-        link: 'https://pujaparikrama.in',
-        github: 'https://github.com/arunabha369/puja-parikrama-v2',
-        live: 'https://pujaparikrama.in',
-        technologies: [
-            { name: 'React', icon: <ReactIcon key="react" /> },
-            { name: 'JavaScript', icon: <JavaScript key="js" /> },
-            { name: 'Netlify', icon: <Netlify key="netlify" /> }
-        ],
-        details: true,
-        projectDetailsPageSlug: '/projects/puja-parikrama-v2',
         isWorking: false
     },
     {
